@@ -20,6 +20,24 @@
 // When the window gets resized call the resize function:
 window.addEventListener('resize', onWindowResize);
 
+function onBeforeUnload(e) {
+    if (thereAreUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+        return;
+    }
+
+    delete e['returnValue'];
+}
+
+window.addEventListener('beforeunload', onBeforeUnload);
+
+function thereAreUnsavedChanges(){
+	return !safeToClose; // Return the oposite of safe to close.
+}
+
+var safeToClose = true; // Starting off as true and will be changed once changes are made to the board.
+
 // Some global variables & constants related to errors:
 var displayErrorMessages = true;
 var errorTimestamps = [];
@@ -837,6 +855,8 @@ function deleteKeyboardShortcutPressed(){
 // touching the main canvas. It then calls other functions that correspond
 // to the applicable tools that are available.
 function instrumentDown(x, y){
+  // Make sure we know that they may have changed the images(s):
+  safeToClose = false;
   tempImageForWindowResize = null;
   
   // Obviously we want to close the dropdowns regardless of what tool is active.
@@ -1848,6 +1868,7 @@ function insertTemplateAsPage(locationOfTemplate){
 function insertPageUsingImage(img){
   // load the image onto the screen, then into the pages arrays.
   if(arrayOfCurrentImages.length < maxNumberOfPages){
+	safeToClose = false;
     tempImageForWindowResize = null;
     saveCurrentImageToArrayBeforeMoving();
     context.drawImage(img, 0, 0);
@@ -3203,7 +3224,7 @@ function getB64ForPath(path){
 	
 	var leafname= path.split('\\').pop().split('/').pop();
 	var cleanedName = "I" + leafname;
-	cleanedName = cleanedName.replace("-", "_");
+	cleanedName = cleanedName.replace(/-/gi, "_");
 	cleanedName = cleanedName.substring(0, cleanedName.length - 4);
 	
 	
