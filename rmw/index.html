@@ -88,7 +88,7 @@
         <li class="dropdown">
           <a class="dropbtn" onclick="fileBtnFunction();" id="fileBtn">File</a>
             <div class="dropdown-content" id="fileDropdown">
-              <a id="reMaximizeBtn" onclick="alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');">Re-Maximize</a>
+              <!--<a id="reMaximizeBtn" onclick="alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');">Re-Maximize</a>-->
               <a href="#" onclick="OIDReadyOpenImagesDialog();" id="openImagesBtn">Open Images</a>
               <a href="#" onclick="SIDReadySaveImagesDialog();" id="saveImagesBtn">Save Images</a>
               <a id="fileCloseBtn" onclick="alert('Sorry, this functionality is only available in the full version. If you would like to close this app, you can use the close button on your browser.');">Close</a>
@@ -187,7 +187,7 @@
         <a id="SDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="settings dialog close button"></a>
         <h2>Settings:</h2>
         <div class="modalBoxContent">
-          <p>Note: Since this app runs compleetly online, these settings will only remain in effect until you close or refresh the app. Unfortunately, that means you will probably need to re-adjust them to your liking every time you refresh or re-start the app. Portability comes with its costs.</p>
+          <p>Note: These settings will only remain in effect until you close or refresh the app. Unfortunately, that means you will probably need to re-adjust them to your liking every time you refresh or re-start the app. Portability comes with its costs.</p>
           
           <ul id="SDUnorderedList">
             <li>
@@ -195,14 +195,12 @@
               <select id="SDCursorDropdown">
                 <option value="default">default</option>
                 <option value="crosshair">crosshair</option>
-                <!-- These options are not allowed in the online version.
                 <option value="u0">large white</option>
                 <option value="u1">very large white</option>
                 <option value="u2">massive white</option>
                 <option value="u3">large red</option>
                 <option value="u4">very large red</option>
                 <option value="u5">massive red</option>
-                -->
                 <option value="none">none</option>
               </select>
             </li>
@@ -212,7 +210,6 @@
             <li><input id="SDUseWidscreenTemplates" type="checkbox" value="false"> Optimize for wide-screen use where possible.</li>
             <li><input id="SDUseColorInvertedTemplates" type="checkbox" value="false"> Use color inverted templates where possible. (This is useful if you prefer a black background.)</li>
             
-            <li>***Note: More features such as auto-save and other various cursor images are avaliable in the full version of Roger's Math Whiteboard.***</li>
             
           </ul>
           
@@ -239,10 +236,10 @@
       <div>
         <a id="openModalTestCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="about dialog close button"></a>
         <img id="ADMainIcon" src="images/icons/scribble-128.png" alt="Rogers Math Whiteboard Icon">
-        <h2 id="ADTitle">About Roger's Math Whiteboard LITE</h2>
+        <h2 id="ADTitle">About Roger's Math Whiteboard Version 3.14159265358979</h2>
         <div id="ADContentArea" class="modalBoxContent">
           
-          <p>***Please note that the below information refers to the full version of Roger's Math Whiteboard. Most of it, including the license, also applies to Roger's Math Whiteboard LITE, but some of the functionality does not work as intended. Roger's Math Whiteboard LITE is copyright 2019 Roger Frybarger. If you would like to share this program with your friends, please send them the link to <a class="webLikeLinks" href="http://codebyrfrybarger.com/rmw" target="_blank" >codebyrfrybarger.com/rmw</a> Also, if you found this program useful, please check out all of Roger's other programs at his <a class="webLikeLinks" href="http://codebyrfrybarger.com/" target="_blank" >main website</a>. Enjoy.***</p>
+          <!--<p>***Please note that the below information refers to the full version of Roger's Math Whiteboard. Most of it, including the license, also applies to Roger's Math Whiteboard LITE, but some of the functionality does not work as intended. Roger's Math Whiteboard LITE is copyright 2019 Roger Frybarger. If you would like to share this program with your friends, please send them the link to <a class="webLikeLinks" href="http://codebyrfrybarger.com/rmw" target="_blank" >codebyrfrybarger.com/rmw</a> Also, if you found this program useful, please check out all of Roger's other programs at his <a class="webLikeLinks" href="http://codebyrfrybarger.com/" target="_blank" >main website</a>. Enjoy.***</p>-->
           
           <!--The line below is a case where the inner html is assigned when the dialog opens.
           The version number of the app is needed, so it must be obtained through javascript.-->
@@ -251,7 +248,7 @@
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roger’s Math Whiteboard is open source and is distributed free of charge. It will never incorporate adds, collect your data, spy on you, or engage in any other such revenue generating but questionable behavior. Instead, please consider donating, getting involved in the project, and/or writing a positive review. See the bottom of <a class="webLikeLinks" href="http://www.rogersmathwhiteboard.com" target="_blank" >rogersmathwhiteboard.com</a> for more info on how you can do this. Thank you for your support!</p>
           
           <p id="ADMainSiteLinkParagraph" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like this program? Help spread the word! Send your friends the link to:<br> <a class="webLikeLinks" id="ADMainSiteLink" href="http://www.rogersmathwhiteboard.com" target="_blank" >www.rogersmathwhiteboard.com</a>.</p>
-          <a class="modalBoxKeypadBtns" onclick="alert('Unfortunately, this functionality is only available in the full version. However, you can right-click the link and copy it to your clipboard that way.');">Copy Link</a>
+          <a class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboard('http://www.rogersmathwhiteboard.com');">Copy Link</a>
           
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A note from the lead programmer, maintainer and original founder of this project:</p>
           <textarea rows="17" cols="55" readonly>
@@ -627,7 +624,7 @@ Public License instead of this License.
 
           </textarea>
           <br>
-          <a class="modalBoxKeypadBtns" onclick="alert('Unfortunately, this functionality is only available in the full version. You can download the full version for free from rogersmathwhiteboard.com.');">Copy License To Clipboard</a>
+          <a class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboardFromPageElement('ADLicenceTextArea');">Copy License To Clipboard</a>
           
         </div>
       </div>
