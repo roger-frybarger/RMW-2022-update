@@ -89,7 +89,7 @@
           <a class="dropbtn" onclick="fileBtnFunction();" id="fileBtn">File</a>
             <div class="dropdown-content" id="fileDropdown">
               <!--<a id="reMaximizeBtn" onclick="alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');">Re-Maximize</a>-->
-              <a href="#" onclick="OIDReadyOpenImagesDialog();" id="openImagesBtn">Open Images</a>
+              <a href="#openImagesDialog" onclick="OIDReadyOpenImagesDialog();" id="openImagesBtn">Open Images</a>
               <a href="#" onclick="SIDReadySaveImagesDialog();" id="saveImagesBtn">Save Images</a>
               <a id="fileCloseBtn" onclick="window.close();">Close</a>
               <a id="deletePageBtn" onclick="deletePageBtnFunction();">Delete Page</a>
@@ -221,6 +221,40 @@
     <!--Here is the open images dialog-->
     
     
+    <div id="openImagesDialog" class="modalDialogs">
+      <div>
+        <a id="OIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="open images dialog close button"></a>
+        <h2 id="OIDHeader">Open Images</h2>
+        <div class="modalBoxContent">
+          
+          <p><strong>If you have not already done so, please read through the following notes about how this program opens images:</strong></p>
+          
+          <ol id="OIDOrderedList">
+            <li>It is possible to import PowerPoint content into this program. The basic steps to accomplish this are:</li>
+            <ol>
+              <li>Create a temporary folder somewhere on your computer.</li>
+              <li>Open the file that you wish to import using PowerPoint or LibreOffice/OpenOffice Impress.</li>
+              <li>If you are using PowerPoint, save the file into the temporary folder using the PNG format and specify that you wish to export all the slides if it asks you. <br>If you are using LibreOffice/OpenOffice Impress, Export the document into the temporary folder using the HTML format, and specifying PNG images with the largest resolution available. (The HTML Design name does not matter.)</li>
+              <li>Open Roger's Math Whiteboard, (This program), and import all the images in the temporary folder, or a sub-folder if applicable, using this window.</li>
+              <li>Once you have successfully imported all the images, the temporary folder, and its contents, can be deleted.</li>
+              <li>Need more detail? Check out the "Features" section of our website, (<a class="webLikeLinks" href="http://www.rogersmathwhiteboard.com" target="_blank" >rogersmathwhiteboard.com</a>). The first two slideshows/animations illustrate this process in detail.</li>
+            </ol>
+            <!--Note that the inner html of the line below is assigned as needed via javascript.
+            The number of images that can be opened needs to be half of the maxPages value, so
+            that needs to be calculated in order to display the text.-->
+            <li id="OIDImportWarningLine"></li>
+            <li>Also remember that Image files can be quite large. Thus; depending on the size and quantity of files you try to open, and the speed of your computer, this process may take several minutes.</li>
+            <li>Since each image that you select will be opened as a page, you will need to be aware of the order in which they are selected. If they are not in the correct order when you import them, the pages will probably be out of order. Look for "Order by" or "Sort by" on the "Open Files" window to correct this sorting order. Also note that you can import individual images if needed. To do this use the "Insert Page" menu, choose "Other", and then choose "From Image."</li>
+            <li>Remember that only valid PNG files smaller than 25MB in size will be imported into this program. All other files, including images that are not in PNG format, will be ignored even if you select them.</li>
+            <li>For reference, the keyboard shortcut to select all files is: ctrl+a  This means while holding down the ctrl key, press the letter "A." Once you see all the files selected, you can release both keys. If you are using a Mac, you may need to select the first file in the list with your mouse and then, while holding down the Shift key, use the down arrow key to select all of the files. Once all of the files are selected, you can release both keys.<br><br><br></li>
+          </ol>
+          
+        </div>
+        <input id="OIDChooseFilesBtn" type="file" onchange="OIDFilesSelectedFunction();" accept="image/png" multiple>
+        <input id="OIDIgnoreThumbnailsCheckbox" type="checkbox" checked>
+        <p id="OIDIgnoreThumbnailsCheckboxLabel">Ignore files that start with "thumb"</p>
+      </div>
+    </div>
     
     <!--Here is the save images dialog-->
     

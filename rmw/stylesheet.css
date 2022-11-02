@@ -509,6 +509,30 @@ input[type='checkbox']:checked {
  * Below is the css that is speciffic to the openImagesDialog:
 */
 
+#OIDOrderedList {
+  list-style-type: decimal;
+  margin: 10px 30px 10px 10px;
+}
+
+#OIDOrderedList li {
+  margin: 10px 0;
+}
+
+#OIDChooseFilesBtn {
+  font-size: 25px;
+}
+
+#OIDIgnoreThumbnailsCheckbox {
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+}
+
+#OIDIgnoreThumbnailsCheckboxLabel {
+  position: absolute;
+  left: 96px;
+  bottom: 0;
+}
 
 /*
  * Below is the css that is speciffic to the saveImagesDialog:

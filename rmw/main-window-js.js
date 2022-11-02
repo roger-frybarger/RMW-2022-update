@@ -317,39 +317,8 @@ function continueAfterAppFinishedLoading1(){
   document.addEventListener('keydown', validateKeyboardInputForDocument);
   allLoaded = true;
   //alert('Welcome to Roger\'s Math Whiteboard LITE!\n\nThis online application is intended as a preview of the full version of Roger\'s Math Whiteboard which is available for free from rogersmathwhiteboard.com. You are free to use it as a basic online whiteboard and experiment with the available features but please be aware that the following functionality does not currently work in this preview:\n\n\n1. Opening sets of images.\n2. Saving the whiteboard pages as a set of images.\n3. Inserting screenshots of external content as pages.\n4. Inserting external images as pages.\n\n Also, this online preview has only been tested in Google Chrome. It may work in other browsers, but it is not intended to be used in them. If you choose to use this app in a browser other than Google Chrome you are doing so at your own risk. \n\n We hope you enjoy this preview. If you do, please consider downloading the full version from our website: rogersmathwhiteboard.com\n\nAlso, the principal author of this program is now offering online math & CIS tutoring!! Check out his website at tutoringbyroger.com');
-  //checkForUsingChrome();
 }
 
-function checkForUsingChrome(){
-  // Source: https://stackoverflow.com/a/13348618
-  // please note, 
-  // that IE11 now returns undefined again for window.chrome
-  // and new Opera 30 outputs true for window.chrome
-  // but needs to check if window.opr is not undefined
-  // and new IE Edge outputs to true now for window.chrome
-  // and if not iOS Chrome check
-  // so use the below updated condition
-  var isChromium = window.chrome;
-  var winNav = window.navigator;
-  var vendorName = winNav.vendor;
-  var isOpera = typeof window.opr !== "undefined";
-  var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
-  var isIOSChrome = winNav.userAgent.match("CriOS");
-
-  if (isIOSChrome) {
-     // is Google Chrome on IOS
-  } else if(
-    isChromium !== null &&
-    typeof isChromium !== "undefined" &&
-    vendorName === "Google Inc." &&
-    isOpera === false &&
-    isIEedge === false
-  ) {
-     // is Google Chrome
-  } else { 
-     alert('It seems that you are not using Google Chrome to run this app. You may run into several issues if you continue using this app in this browser. These include:\n1. Scroll bars may be too small.\n2. Up/down arrows may be too small. \n3. Touchscreens may not be recognised. \n4. App may randomly crash or break in unexpected ways.\nWe recommend using this app in Google Chrome. If you continue using this app in this browser you are doing so at your own risk.');
-  }
-}
 
 function adjustSizeOfMenuButtonsToScreenSize(){
   // I know it is not good practice to hard-code this here, but I do not expect these to change
@@ -525,7 +494,7 @@ function checkForScreenSizeIssues(){
   if(screenX < 800 || screenY < 600){
     // eslint-disable-next-line max-len
     alert('Your screen resolution is too low to allow this program to display properly. A minimum screen resolution of 800 by 600 is required.', 'Error');
-    ipcRenderer.send('terminate-this-app');
+    //ipcRenderer.send('terminate-this-app');
   }
   if(screenX > 1920 || screenY > 1080){
     // eslint-disable-next-line max-len
@@ -1799,6 +1768,42 @@ function insertPageBtnFunction(){ // eslint-disable-line no-unused-vars
   document.getElementById('insertPageDropdown').classList.toggle('show');
 }
 
+// Here is the set of functions that handle asynchronously loading a set of dataURLs:
+function loadImagesUsingArrayOfDataURLs(arrayOfURLs){
+  arrayOfOriginalImages = [];  // Clear out the arrays that store page data.
+  arrayOfCurrentImages = [];
+  arrayOfOriginalImagesX = [];
+  arrayOfOriginalImagesY = [];
+  dataUrlsToLoad = arrayOfURLs.length;
+  dataUrlsLoaded = 0;
+  for(var i = 0; i < arrayOfURLs.length; ++i){
+    var justAnotherTempImage = new Image();
+    justAnotherTempImage.onload = loadingFromDataUrlsImageLoaded;
+    justAnotherTempImage.theLocationIndex = i;
+    justAnotherTempImage.src = arrayOfURLs[i];
+  }
+}
+
+function loadingFromDataUrlsImageLoaded(){
+  arrayOfOriginalImages[this.theLocationIndex] = this;
+  arrayOfCurrentImages[this.theLocationIndex] = this;
+  arrayOfOriginalImagesX[this.theLocationIndex] = this.naturalWidth;
+  arrayOfOriginalImagesY[this.theLocationIndex] = this.naturalHeight;
+  ++dataUrlsLoaded;
+  if(dataUrlsLoaded === dataUrlsToLoad){
+    finishLoadingImagesUsingArrayOfDataURLs();
+  }
+}
+
+// When all of the dataURLs have finished loading, this function is called to load the first image onto the canvas:
+function finishLoadingImagesUsingArrayOfDataURLs(){
+  currentPg = 1;
+  // eslint-disable-next-line max-len
+  resizeAndLoadImagesOntoCanvases(arrayOfCurrentImages[currentPg - 1], arrayOfOriginalImages[currentPg - 1], arrayOfOriginalImagesX[currentPg - 1], arrayOfOriginalImagesY[currentPg - 1]);
+  updatePageNumsOnGui();
+  clearUndoHistory();
+}
+
 
 // Here is the function that takes care of scaling the image/drawing area in the optimal way, given the
 // size of the window.
@@ -2229,13 +2234,220 @@ function SDCheckForEnter(e){ // eslint-disable-line no-unused-vars
 
 
 // ********Here is the code for the Open Images Dialog:********
+var OIDHalfMaxPages;
+var OIDFilesArray = null;
+var OIDTempFilesArray = null;
+var OIDFilesHandled;
+var OIDFilesToHandle;
+var OIDSomeSkipped = false;
 
 // This just gets the dialog ready:
 function OIDReadyOpenImagesDialog(){ // eslint-disable-line no-unused-vars
-  
-  alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');
-  return;
+  document.getElementById('OIDHeader').innerHTML = 'Open Images';
+  OIDHalfMaxPages = Math.round(maxNumberOfPages / 2);
+  // Clear out any files that they chose the last time they opened the dialog.
+  document.getElementById('OIDChooseFilesBtn').value = '';
+  // eslint-disable-next-line max-len
+  document.getElementById('OIDImportWarningLine').innerHTML = 'If you try to open/import more than ' + OIDHalfMaxPages + ' images/slides at once, you will find that only the first ' + OIDHalfMaxPages + ' are imported. If you need to import more than ' + OIDHalfMaxPages + ' images/slides, you will need to break them up into sets of ' + OIDHalfMaxPages + ' each. However, remember that few audiences can remain attentive after viewing ' + OIDHalfMaxPages + ' slides in one sitting. Thus; this limit provides a convenient point for a short break if nothing else. Also note that this limit can be adjusted by changing the "Max Pages Allowed" parameter in the settings. It will always be about half of this value.';
+  // Clean out some variables:
+  OIDFilesArray = [];
+  OIDTempFilesArray = [];
+  OIDFilesHandled = 0;
+  OIDFilesToHandle = 0;
 }
+
+// If the user selects some files this is the function that handles that event:
+function OIDFilesSelectedFunction(){ // eslint-disable-line no-unused-vars
+  var files = document.getElementById('OIDChooseFilesBtn').files;
+  // First we will check to see if the user selected any files:
+  if(files.length !== 0){
+    // Now that we know they did select one or more files, let's see if there are unsaved changes to deal with:
+    if(safeToClose){
+      // Ok, so now we can continue safely:
+      OIDCleanArray(files);
+    }
+    else{
+      // Here we have to ask the user if they want to save their changes:
+      // eslint-disable-next-line max-len
+      var ret = confirm("***WARNING***:\nIf you proceed, any changes made to the current set of\nimages will be lost. Proceed anyway?");
+      
+      if(ret == true){
+        // Here we can continue anyway because the user said it was ok.
+        OIDCleanArray(files);
+      }
+    }
+  }
+}
+
+// This function cleans the files array and re-fills it with the new files that the user just chose:
+function OIDCleanArray(filesArray){
+  OIDSomeSkipped = false;
+  document.getElementById('OIDHeader').innerHTML = 'Processing...';
+  document.getElementById('openImagesDialog').style.cursor = 'wait';
+  // First let's get the state of the check box:
+  var excludeThumbnails = document.getElementById('OIDIgnoreThumbnailsCheckbox').checked;
+  // And calculate the limit for the list of good files:
+  var limit = Math.min(filesArray.length, OIDHalfMaxPages);
+  
+  var i = 0;
+  if(excludeThumbnails){
+    // If we are excluding thumbnails, then we will go through the filesArray, and...
+    for(i = 0; i < filesArray.length; ++i){
+      // Check the name for thumb...
+      if(filesArray[i].name.substring(0, 5) !== 'thumb'){
+        // And if it isn't found, we will check to see that it is a png file within the size limits:
+        if(filesArray[i].size > 0 && filesArray[i].size < 25000000 && filesArray[i].type === 'image/png'){
+          // If it looks like a good file, we will push it into the array:
+          OIDFilesArray.push(filesArray[i]);
+          // And quit the loop if the list of good files has reached its size limit:
+          if(OIDFilesArray.length >= limit){
+            if(OIDFilesArray.length === OIDHalfMaxPages){
+              OIDSomeSkipped = true;
+            }
+            i = filesArray.length;
+          }
+        }
+        else{
+          OIDSomeSkipped = true;
+        }
+      }
+    }
+  }
+  else{
+    // If we are not excluding thumbnails, then we will go through the filesArray array, and...
+    for(i = 0; i < filesArray.length; ++i){
+      // Check to see that it is a png file within the size limits:
+      if(filesArray[i].size > 0 && filesArray[i].size < 25000000 && filesArray[i].type === 'image/png'){
+        // If it looks like a good file, we will push it into the array:
+        OIDFilesArray.push(filesArray[i]);
+        // And quit the loop if the list of good files has reached its size limit:
+        if(OIDFilesArray.length >= limit){
+          if(OIDFilesArray.length === OIDHalfMaxPages){
+            OIDSomeSkipped = true;
+          }
+          i = filesArray.length;
+        }
+      }
+      else{
+        OIDSomeSkipped = true;
+      }
+    }
+  }
+  // Now let's set up an empty array to use as a landing place for the files as they load asynchronously.
+  // Eventually, (once all the files have loaded), we will go through this list and remove any empty entries.
+  OIDTempFilesArray = null;
+  OIDTempFilesArray = new Array(OIDFilesArray.length);
+  OIDTempFilesArray.fill(''); 
+  // We also need to know how many files there are that need to be loaded:
+  OIDFilesToHandle = OIDFilesArray.length;
+  // Now that the array has the correct files in it, we can work on actually loading them:
+  OIDActuallyLoadImages();
+}
+
+// This function loops through the list of files and starts them off loading asynchronously:
+function OIDActuallyLoadImages(){
+  // First check to see if there are actually files to load:
+  if(OIDFilesToHandle <= 0){
+    OIDFinalizeArray();
+    return;
+  }
+  // Loop through the list of files to load and...
+  for(var i = 0; i < OIDFilesToHandle; ++i){
+    // Give each file a new FileReader object with...
+    var reader = new FileReader();
+    // The current index of the loop, so that we know where each image should be placed in
+    // the array of landing places:
+    reader.theIndex = i;
+    // An onload function that places the base64 data url into the applicable location in the
+    // array of landing places once the image finishes loading, and then checks to see if all
+    // of the images have been handled:
+    reader.onload = OIDOnImageLoaded;
+    // An onerror function that simply checks to see if all of the images have been handled:
+    reader.onerror = OIDLoadFailed;
+    // And finally, the file to load:
+    reader.readAsDataURL(OIDFilesArray[i]);
+  }
+}
+
+function OIDOnImageLoaded(e){
+  OIDTempFilesArray[this.theIndex] = e.target.result;
+  OIDIncrementAndCheck();
+}
+
+function OIDLoadFailed(){
+  OIDIncrementAndCheck();
+  OIDSomeSkipped = true;
+}
+
+function OIDIncrementAndCheck(){
+  // Each time this function is called, it means that either:
+  // 1. A file has finished loading, or:
+  // 2. A file has failed to load.
+  // In either case, we need to keep track of how many files have been handled so that
+  // we can move on to the next step once all of them have been handled. Thus:
+  // we will increment the OIDFilesHandled counter, and...
+  ++OIDFilesHandled;
+  document.getElementById('OIDHeader').innerHTML = 'Processing file ' + OIDFilesHandled + ' of ' + OIDFilesToHandle;
+  // check to see if all of the files have been handled:
+  if(OIDFilesHandled === OIDFilesToHandle){
+    // If they have all been handled, we will move on to the next step:
+    OIDFinalizeArray();
+  }
+}
+
+function OIDFinalizeArray(){
+  document.getElementById('OIDHeader').innerHTML = 'Cleaning Up...';
+  // Here is where we need to go through the temp array and remove any empty or invalid entries.
+  // From there, we can assign the temp array to the main one & null out the temp one.
+  
+  // First, let's copy all of the entries in the OIDTempFilesArray into a different
+  // local array so that if somehow OIDTempFilesArray changes while we are working,
+  // we will be working on a snapshot of it instead of the real thing:
+  var tmp = [];
+  var i = 0;
+  for(i = 0; i < OIDTempFilesArray.length; ++i){
+    tmp.push(OIDTempFilesArray[i]);
+  }
+  // Now we will empty out the main OIDFilesArray...
+  OIDFilesArray = [];
+  // And loop through the local array and only push entries into the main array if they are not empty
+  // and seem to be valid png images:
+  for(i = 0; i < tmp.length; ++i){
+    if(tmp[i] !== ''){
+      if(checkPNGImage(tmp[i])){
+        OIDFilesArray.push(tmp[i]);
+      }
+      else{
+        OIDSomeSkipped = true;
+      }
+    }
+  }
+  
+  // Now that the main array has the finalized set of data URLs in it, it is time for some cleanup:
+  tmp = [];
+  OIDTempFilesArray = [];
+  // Let's also let the user know how things worked out:
+  OIDInformIfNecessary();
+  // And loading the end result if that is possible:
+  if(OIDFilesArray.length > 0){
+    loadImagesUsingArrayOfDataURLs(OIDFilesArray);
+  }
+  else{
+    alert('Error: No valid images were found', '');
+  }
+  // And finally, the last bit of cleanup:
+  OIDFilesArray = [];
+  document.getElementById('openImagesDialog').style.cursor = 'default';
+  document.getElementById('OIDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
+}
+
+function OIDInformIfNecessary(){
+  if(OIDSomeSkipped){
+    // eslint-disable-next-line max-len
+    alert('Note: Some files were skipped because one or more of the following situations applied:\n\n1. More than ' + OIDHalfMaxPages + ' images were selected\n2. One or more images was larger than 25MB\n3. One or more images failed to load\n4. One or more files had a size of 0 bytes\n5. One or more files was not a PNG image\n6. One or more files was corrupt.');
+  }
+}
+
 
 
 // ********Here is the code for the saveImagesDialog:********
