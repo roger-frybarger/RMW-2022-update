@@ -69,6 +69,11 @@ var currentCursorValue = 'default';
 
 var allLoaded = false; // This is used to know if the app has finished loading.
 
+// Some stuff for auto-save and regular save:
+var currentAutosaveValue = 'never';
+var autosaveInterval;
+var pathOfFolderToSaveInto = '';
+
 // *****Here are some global variables that are directly related to drawing & working with the canvas:*****
 var context; // This is the context used for drawing the image on the canvas
 var eraserContext; // This is the context for the canvas used for the original images,
@@ -2453,12 +2458,275 @@ function OIDInformIfNecessary(){
 // ********Here is the code for the saveImagesDialog:********
 
 
+var SIDNameForFiles = '';
+var SIDValidInput = true;
+var SIDValidCharsString = 'abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890';
+var SIDFilesToHandle;
+var SIDFilesHandled;
+var SIDFilesToDelete;
+var SIDFilesDeleted;
+var SIDErrorsSavingFiles = false;
+var SIDSaveViaCtrlS = false;
+
 // This function simply sets up the save images dialog:
 function SIDReadySaveImagesDialog(){ // eslint-disable-line no-unused-vars
-  
-  alert('Unfortunately, this functionality is only available in the full version at the moment. However, you may be able to right-click on individual pages and save them that way if you need to.');
-  return;
+  saveCurrentImageToArrayBeforeMoving();
+  document.getElementById('SIDHeader').innerHTML = 'Save Images';
+  pathOfFolderToSaveInto = '';
+  SIDNameForFiles = '';
 }
+
+// Validation for the file name text box.
+function SIDFileNamesInputTextboxValidator(){ // eslint-disable-line no-unused-vars
+  var rawInput = document.getElementById('SIDFileNamesTextBox').value;
+  if(rawInput.length === 0){
+    document.getElementById('SIDFileNamesTextBox').style.backgroundColor = 'white';
+    SIDValidInput = true;
+  }
+  else{
+    if(rawInput.length > 50){
+      document.getElementById('SIDFileNamesTextBox').style.backgroundColor = 'red';
+      SIDValidInput = false;
+    }
+    else{
+      for(var i = 0; i < rawInput.length; ++i){
+        if(!SIDGoodChar(rawInput.charAt(i))){
+          document.getElementById('SIDFileNamesTextBox').style.backgroundColor = 'red';
+          SIDValidInput = false;
+          i = rawInput.length;
+        }
+        else{
+          document.getElementById('SIDFileNamesTextBox').style.backgroundColor = 'white';
+          SIDValidInput = true;
+        }
+      }
+    }
+  }
+}
+
+// This function checks for strange characters in the file name that the user specified.
+function SIDGoodChar(chr){
+  if(SIDValidCharsString.indexOf(chr) === -1){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+// Validation for the choose folder button so the user must enter a valid file name before being allowed to choose a folder
+function SIDChooseFolderBtnFunction(){ // eslint-disable-line no-unused-vars
+  if(SIDValidInput){
+    SIDLaunchOpenFolderWindow();
+    //getDir();
+  }
+  else{
+    alert('Error: Please choose a valid name to put on all of the files or leave the field empty.', '');
+  }
+}
+
+// After the file name validation passes this function runs to launch the open folder window:
+async function SIDLaunchOpenFolderWindow(){
+	SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
+
+	try {
+        pathOfFolderToSaveInto = await window.showDirectoryPicker({
+            startIn: 'desktop'
+        });
+        var numFilesInFolder = 0;
+
+        for await (const entry of pathOfFolderToSaveInto.values()) {
+			numFilesInFolder++;
+        }
+        if(numFilesInFolder !== 0){
+        var ret = confirm("***WARNING***\nThe folder you chose is not empty. If you continue, it's contents WILL BE DELETED OR OVERWRITTEN. Continue anyway?");
+        if(ret == false){
+			return;
+		}
+		}
+		// Should be good to go now. They had their chance to cancel so we can clean out the folder
+		// if it isn't empty:
+		if(numFilesInFolder !== 0){
+			for await (const entry of pathOfFolderToSaveInto.values()) {
+				// entry.name entry.kind
+				try{
+					if(entry.kind == "file"){
+						pathOfFolderToSaveInto.removeEntry(entry.name);
+					}
+					else{
+						pathOfFolderToSaveInto.removeEntry(entry.name, { recursive: true });
+					}
+				}
+				catch(err){}
+			}
+		}
+		
+		//let newFile = pathOfFolderToSaveInto.getFileHandle('newFile.txt', { create: true });
+        
+    } catch(e) {
+        //console.log(e);
+    }
+
+
+	
+	
+  //SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
+  //dialog.showOpenDialog(theMainWindow, { title: 'Choose Folder', defaultPath: hf,
+    //properties: ['openDirectory', 'createDirectory'] }, function (paths){
+      //if (typeof paths === 'undefined' || paths === null){
+        //return;
+      //}
+      //pathOfFolderToSaveInto = paths[0];
+      //SIDHandleFolderPath();
+    //});
+}
+
+
+
+// Here is the function that actually handles the folder that the user chose:
+function SIDHandleFolderPath(){
+  document.getElementById('SIDHeader').innerHTML = 'Processing...';
+  document.getElementById('saveImagesDialog').style.cursor = 'wait';
+  fs.readdir(pathOfFolderToSaveInto, function (err, files){
+    if (err){
+      // eslint-disable-next-line max-len
+      alert('Error: An error occurred while trying to inspect the folder you selected. Here is the error: ' + err + '\n\nEnsure that the folder you choose exists, is empty, and that you are allowed to create files there', '');
+      document.getElementById('SIDHeader').innerHTML = 'Save Images';
+      document.getElementById('saveImagesDialog').style.cursor = 'default';
+      return;
+    }
+    if(files.length !== 0){
+      // Here we have to ask the user if they want to continue:
+      // eslint-disable-next-line max-len
+      var ret = dialog.showMessageBox(theMainWindow, { title: ' ', type: 'warning', message: 'Warning: The folder that you have selected is not empty. If you continue, some or all of its contents may be deleted and replaced. Are you sure you want to continue?', buttons: ['Overwrite', 'Cancel'], defaultId: 1, noLink: true });
+      if(ret === 0){
+        // Here we can continue anyway because the user said it was ok.
+        SIDActuallySaveFiles();
+      }
+      else{
+        return;
+      }
+    }
+    else{
+      // Here we are good to move on to the next step.
+      SIDActuallySaveFiles();
+    }
+  });
+}
+
+// Here is the function that handles actually saving the images to the folder.
+// Note that this can be called internally by SIDHandleFolderPath(), via
+// keyboard shortcut, and also internally if the user has enabled autosave.
+function SIDActuallySaveFiles(ctl_s = false){
+  SIDSaveViaCtrlS = ctl_s;
+  fs.readdir(pathOfFolderToSaveInto, function (err, files){
+    if(err){
+      // eslint-disable-next-line max-len
+      alert('Error: An error occurred while trying to open the folder you selected. Here is the error: ' + err + '\n\nEnsure that the folder you choose exists and that you are allowed to create files there. Use the "Save Images" option in the file menu to choose a different folder if necessary.', '');
+      return;
+    }
+    if(files.length > arrayOfCurrentImages.length){
+      // Here is where we need to go through and delete the extra images if they exist:
+      var numCurrentImages = arrayOfCurrentImages.length;
+      SIDFilesToDelete = files.length - numCurrentImages;
+      SIDFilesDeleted = 0;
+      for(var i = files.length; i > numCurrentImages; --i){
+        var name = pathOfFolderToSaveInto + path.sep + SIDNameForFiles + i + '.png';
+        fs.unlink(name, SIDFileDeleted);
+      }
+    }
+    else{
+      // If there are no extra images, we can just continue:
+      SIDContinueSavingFiles();
+    }
+  });
+}
+
+// This function basically just counts the number of files deleted and calls the next function if all
+// of the files that need to be deleted have been deleted:
+function SIDFileDeleted(){
+  ++SIDFilesDeleted;
+  if(SIDFilesDeleted === SIDFilesToDelete){
+    SIDContinueSavingFiles();
+  }
+}
+
+// This function actually saves the files:
+function SIDContinueSavingFiles(){
+  SIDErrorsSavingFiles = false;
+  SIDFilesToHandle = arrayOfCurrentImages.length;
+  SIDFilesHandled = 0;
+  for(var i = 0; i < SIDFilesToHandle; ++i){
+    var name = pathOfFolderToSaveInto + path.sep + SIDNameForFiles + (i + 1) + '.png';
+    fs.writeFile(name, SIDDecodeBase64Image(arrayOfCurrentImages[i].src), SIDFileSaved);
+  }
+}
+
+// This function runs every time a file is saved and then hands control off to the incrementing function:
+function SIDFileSaved(err){
+  if(SIDSaveViaCtrlS === false){
+    document.getElementById('SIDHeader').innerHTML = 'Processing file ' + SIDFilesHandled + ' of ' + SIDFilesToHandle;
+  }
+  if(err){
+    SIDErrorsSavingFiles = true;
+    SIDIncrementAndCheck();
+  }
+  else{
+    SIDIncrementAndCheck();
+  }
+}
+
+// This function just checks to see if all the files have been handled and calls the finishing function once
+// all the files have been handled.
+function SIDIncrementAndCheck(){
+  ++SIDFilesHandled;
+  if(SIDFilesHandled === SIDFilesToHandle){
+    SIDFinishedSaving();
+  }
+}
+
+// This function gets called once all of the files have been handled.
+// It cleans up the GUI of necessary and notifies the user if something
+// didn't go right.
+function SIDFinishedSaving(){
+  if(SIDSaveViaCtrlS === false){
+    document.getElementById('saveImagesDialog').style.cursor = 'default';
+    document.getElementById('SIDHeader').innerHTML = 'Save Images';
+    if(SIDErrorsSavingFiles){
+      // eslint-disable-next-line max-len
+      alert('Error: One or more files did not save correctly. Ensure that the folder you choose exists, is empty, and that you are allowed to create files there', '');
+    }
+    else{
+      // Here we can simply close the dialog, set the mouse back to normal if applicable, and
+      // set the applicable variable to true so that they can close the document without the warning.
+      safeToClose = true;
+      document.getElementById('SIDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
+    }
+  }
+  else{
+    if(SIDErrorsSavingFiles){
+      // eslint-disable-next-line max-len
+      alert('Error: One or more files did not save correctly. Ensure that the folder you choose exists, and that you are allowed to create files there', '');
+    }
+    else{
+      safeToClose = true;
+    }
+  }
+}
+
+// The function below is a modified version of the function found at:
+// https://stackoverflow.com/a/20272545
+// I appreciate Julian Lannigan's work!      eslint-disable-line spellcheck
+function SIDDecodeBase64Image(dataString){
+  var matches = dataString.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+
+  if(matches.length !== 3){
+    throw new Error('Invalid base64 input string in SIDDecodeBase64Image');
+  }
+
+  return new Buffer(matches[2], 'base64');
+}
+
 
 
 // ********Here is the code for the aboutDialog:********
