@@ -2467,6 +2467,7 @@ var SIDFilesToDelete;
 var SIDFilesDeleted;
 var SIDErrorsSavingFiles = false;
 var SIDSaveViaCtrlS = false;
+var SIDNumFilesInFolder = 0;
 
 // This function simply sets up the save images dialog:
 function SIDReadySaveImagesDialog(){ // eslint-disable-line no-unused-vars
@@ -2527,8 +2528,6 @@ function SIDChooseFolderBtnFunction(){ // eslint-disable-line no-unused-vars
 
 // After the file name validation passes this function runs to launch the open folder window:
 async function SIDLaunchOpenFolderWindow(){
-	SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
-
 	try {
         pathOfFolderToSaveInto = await window.showDirectoryPicker({
             startIn: 'desktop'
@@ -2538,6 +2537,9 @@ async function SIDLaunchOpenFolderWindow(){
         for await (const entry of pathOfFolderToSaveInto.values()) {
 			numFilesInFolder++;
         }
+        SIDNumFilesInFolder = numFilesInFolder;
+        
+        /*
         if(numFilesInFolder !== 0){
         var ret = confirm("***WARNING***\nThe folder you chose is not empty. If you continue, it's contents WILL BE DELETED OR OVERWRITTEN. Continue anyway?");
         if(ret == false){
@@ -2560,6 +2562,7 @@ async function SIDLaunchOpenFolderWindow(){
 				catch(err){}
 			}
 		}
+		*/
 		
 		//let newFile = pathOfFolderToSaveInto.getFileHandle('newFile.txt', { create: true });
         
@@ -2567,18 +2570,90 @@ async function SIDLaunchOpenFolderWindow(){
         //console.log(e);
     }
 
+}
 
+
+async function SIDActuallySavePagesBtnFunction(){
+	if(!SIDValidInput){
+		alert('Error: Please choose a valid name to put on all of the files or leave the field empty.');
+		return;
+	}
+	if(typeof pathOfFolderToSaveInto !== 'object'){
+		alert("Sorry, you must choose a folder and allow the site, (this program), to view it first.");
+		return;
+	}
+	if(SIDNumFilesInFolder !== 0){
+		var ret = confirm("***WARNING***\nThe folder you chose seems to have other files in it. If you continue, it's contents WILL BE DELETED OR OVERWRITTEN. Continue anyway?");
+        if(ret == false){
+			return;
+		}
+	}
+	// They said it was ok, so here we can clean out the folder:
+	if(SIDNumFilesInFolder !== 0){
+		for await (const entry of pathOfFolderToSaveInto.values()) {
+			// entry.name entry.kind
+			try{
+				if(entry.kind == "file"){
+					pathOfFolderToSaveInto.removeEntry(entry.name);
+				}
+				else{
+					pathOfFolderToSaveInto.removeEntry(entry.name, { recursive: true });
+				}
+			}
+			catch(err){}
+		}
+	}
 	
+	// Now to actually save all the images as files...       *** *** ***
+	SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
+	// We need: 1. Name, 2. fileHandle, 3. contents
 	
-  //SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
-  //dialog.showOpenDialog(theMainWindow, { title: 'Choose Folder', defaultPath: hf,
-    //properties: ['openDirectory', 'createDirectory'] }, function (paths){
-      //if (typeof paths === 'undefined' || paths === null){
-        //return;
-      //}
-      //pathOfFolderToSaveInto = paths[0];
-      //SIDHandleFolderPath();
-    //});
+	SIDFilesToHandle = arrayOfCurrentImages.length;
+	SIDFilesHandled = 0;
+	var i = 0;
+	//for(var i = 0; i < SIDFilesToHandle; ++i){
+		var name = "" + SIDNameForFiles + (i + 1) + '.png';
+		var fileHandle = pathOfFolderToSaveInto.getFileHandle(name, { create: true });
+		var contents = Base64Binary.decodeArrayBuffer(arrayOfCurrentImages[i].src);
+		//const writable = await fileHandle.createWritable;
+		//await writable.write(contents);
+		//await writable.close();
+		//SIDWriteFile(fileHandle, Base64Binary.decodeArrayBuffer(arrayOfCurrentImages[i].src));   // *** *** ***
+		writeFile(fileHandle, Base64Binary.decodeArrayBuffer(arrayOfCurrentImages[i].src));
+	//}
+	alert('Pages Saved To Folder.');
+	
+}
+
+
+async function SIDWriteFile(fileHandle, contents) {
+	console.log(window.isSecureContext);
+    //console.log(permissionStatus.state);
+  // Create a FileSystemWritableFileStream to write to.
+  //const writable = await fileHandle.createWritable();
+  const writable = await fileHandle.createWriter();
+
+  // Write the contents of the file to the stream.
+  await writable.write(contents);
+
+  // Close the file and write the contents to disk.
+  await writable.close();
+}
+
+
+async function writeFile(e, t) {          // ?????????????????????????????????????????????????????????
+	if (e.createWriter) {
+		const i = await e.createWriter();
+		return await i.write(0, t),
+		void await i.close()
+	}
+	//const i = await e.createWritable();
+	console.log(e);
+	console.log(e.Promise);
+	console.log(JSON.stringify(e, null, 4));
+	var i = await e.createWritable();
+	await i.write(t),
+	await i.close()
 }
 
 
@@ -2658,7 +2733,7 @@ function SIDContinueSavingFiles(){
   SIDFilesHandled = 0;
   for(var i = 0; i < SIDFilesToHandle; ++i){
     var name = pathOfFolderToSaveInto + path.sep + SIDNameForFiles + (i + 1) + '.png';
-    fs.writeFile(name, SIDDecodeBase64Image(arrayOfCurrentImages[i].src), SIDFileSaved);
+    fs.writeFile(name, SIDDecodeBase64Image(arrayOfCurrentImages[i].src), SIDFileSaved);   // *** *** ***
   }
 }
 
@@ -2724,7 +2799,21 @@ function SIDDecodeBase64Image(dataString){
     throw new Error('Invalid base64 input string in SIDDecodeBase64Image');
   }
 
-  return new Buffer(matches[2], 'base64');
+  //return new Buffer(matches[2], 'base64');
+  
+  return base64ToArrayBuffer(dataString);
+}
+
+
+// Found at https://stackoverflow.com/a/21797381
+function base64ToArrayBuffer(base64) {
+    var binary_string = window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
 }
 
 
@@ -3958,3 +4047,106 @@ echo -e $relatedCode >> outputb64code.txt
  * 
  *  
  */
+
+
+/* Below here is some code that I found that hopefully allows me to save files easier:
+ * I found it at https://github.com/danguer/blog-examples/blob/master/js/base64-binary.js
+ * 
+ * I read at https://stackoverflow.com/a/36378903 that it can be used like this:
+ * var uintArray = Base64Binary.decode(base64_string);
+ * var byteArray = Base64Binary.decodeArrayBuffer(base64_string);
+ * */
+
+/*
+Copyright (c) 2011, Daniel Guerrero
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL DANIEL GUERRERO BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * Uses the new array typed in javascript to binary base64 encode/decode
+ * at the moment just decodes a binary base64 encoded
+ * into either an ArrayBuffer (decodeArrayBuffer)
+ * or into an Uint8Array (decode)
+ * 
+ * References:
+ * https://developer.mozilla.org/en/JavaScript_typed_arrays/ArrayBuffer
+ * https://developer.mozilla.org/en/JavaScript_typed_arrays/Uint8Array
+ */
+
+var Base64Binary = {
+	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+	
+	/* will return a  Uint8Array type */
+	decodeArrayBuffer: function(input) {
+		var bytes = (input.length/4) * 3;
+		var ab = new ArrayBuffer(bytes);
+		this.decode(input, ab);
+		
+		return ab;
+	},
+
+	removePaddingChars: function(input){
+		var lkey = this._keyStr.indexOf(input.charAt(input.length - 1));
+		if(lkey == 64){
+			return input.substring(0,input.length - 1);
+		}
+		return input;
+	},
+
+	decode: function (input, arrayBuffer) {
+		//get last chars to see if are valid
+		input = this.removePaddingChars(input);
+		input = this.removePaddingChars(input);
+
+		var bytes = parseInt((input.length / 4) * 3, 10);
+		
+		var uarray;
+		var chr1, chr2, chr3;
+		var enc1, enc2, enc3, enc4;
+		var i = 0;
+		var j = 0;
+		
+		if (arrayBuffer)
+			uarray = new Uint8Array(arrayBuffer);
+		else
+			uarray = new Uint8Array(bytes);
+		
+		input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+		
+		for (i=0; i<bytes; i+=3) {	
+			//get the 3 octects in 4 ascii chars
+			enc1 = this._keyStr.indexOf(input.charAt(j++));
+			enc2 = this._keyStr.indexOf(input.charAt(j++));
+			enc3 = this._keyStr.indexOf(input.charAt(j++));
+			enc4 = this._keyStr.indexOf(input.charAt(j++));
+	
+			chr1 = (enc1 << 2) | (enc2 >> 4);
+			chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+			chr3 = ((enc3 & 3) << 6) | enc4;
+	
+			uarray[i] = chr1;			
+			if (enc3 != 64) uarray[i+1] = chr2;
+			if (enc4 != 64) uarray[i+2] = chr3;
+		}
+	
+		return uarray;	
+	}
+}
+

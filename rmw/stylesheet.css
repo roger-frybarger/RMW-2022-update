@@ -559,6 +559,13 @@ input[type='checkbox']:checked {
   width: 150px;
 }
 
+#SIDActuallySavePagesBtn {
+  left: 180px;
+  bottom: 0;
+  height: 60px;
+  width: 170px;
+}
+
 /*
  * Below is the css that is speciffic to the aboutDialog:
 */
