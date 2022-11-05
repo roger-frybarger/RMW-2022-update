@@ -552,10 +552,6 @@ function passKeyboardInputOffToFunction(e){ // eslint-disable-line max-statement
     pasteKeyboardShortcutPressed();
     return;
   }
-  if(e.ctrlKey === true && e.altKey === false && e.shiftKey === false && e.metaKey === false && e.key === 's'){
-    saveKeyboardShortcutPressed();
-    return;
-  }
   if(e.ctrlKey === true && e.altKey === false && e.shiftKey === false && e.metaKey === false && e.key === 'a'){
     selectAllKeyboardShortcutPressed();
     return;
@@ -650,10 +646,6 @@ function pasteKeyboardShortcutPressed(){
     cancelSelect();
     pasteBtnFunction();
   }
-}
-
-function saveKeyboardShortcutPressed(){
-  document.getElementById('saveImagesBtn').click();
 }
 
 function selectAllKeyboardShortcutPressed(){
