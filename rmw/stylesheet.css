@@ -555,12 +555,13 @@ input[type='checkbox']:checked {
 #SIDChooseFolderBtn {
   left: 20px;
   bottom: 0;
-  height: 40px;
-  width: 150px;
+  height: 60px;
+  width: 85px;
 }
 
+
 #SIDActuallySavePagesBtn {
-  left: 180px;
+  left: 125px;
   bottom: 0;
   height: 60px;
   width: 170px;

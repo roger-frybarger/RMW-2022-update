@@ -36,6 +36,14 @@ function thereAreUnsavedChanges(){
 	return !safeToClose; // Return the oposite of safe to close.
 }
 
+// For issues related to file saving
+//window.addEventListener('unhandledrejection', function(event) {
+  // the event object has two special properties:
+  //alert(event.promise); // [object Promise] - the promise that generated the error
+  //alert(event.reason); // Error: Whoops! - the unhandled error object
+  //alert('Sorry an error occured. Please try that again.');
+//});
+
 
 // These are the data urls for the cursor images
 // I tried just using png images, but this was the only way I found to make it work:
@@ -2515,19 +2523,14 @@ function SIDGoodChar(chr){
   }
 }
 
-// Validation for the choose folder button so the user must enter a valid file name before being allowed to choose a folder
-function SIDChooseFolderBtnFunction(){ // eslint-disable-line no-unused-vars
-  if(SIDValidInput){
-    SIDLaunchOpenFolderWindow();
-    //getDir();
-  }
-  else{
-    alert('Error: Please choose a valid name to put on all of the files or leave the field empty.', '');
-  }
-}
 
-// After the file name validation passes this function runs to launch the open folder window:
-async function SIDLaunchOpenFolderWindow(){
+// This function validates things and then launches the folder selection window:
+async function SIDChooseFolderBtnFunction(){
+	// Validation for the choose folder button so the user must enter a valid file name before being allowed to choose a folder
+	if(!SIDValidInput){
+		alert('Error: Please choose a valid name to put on all of the files or leave the field empty.');
+		return;
+	}
 	try {
         pathOfFolderToSaveInto = await window.showDirectoryPicker({
             startIn: 'desktop'
@@ -2538,12 +2541,18 @@ async function SIDLaunchOpenFolderWindow(){
 			numFilesInFolder++;
         }
         SIDNumFilesInFolder = numFilesInFolder;
+        if(SIDNumFilesInFolder !== 0){
+			SIDWarnAboutEmptyFolder();
+			return;
+		}
         
     } catch(e) {
         //console.log(e);
     }
 
 }
+
+
 
 
 async function SIDActuallySavePagesBtnFunction(){
@@ -2556,25 +2565,8 @@ async function SIDActuallySavePagesBtnFunction(){
 		return;
 	}
 	if(SIDNumFilesInFolder !== 0){
-		var ret = confirm("***WARNING***\nThe folder you chose seems to have other files in it. If you continue, it's contents WILL BE DELETED OR OVERWRITTEN. Continue anyway?");
-        if(ret == false){
-			return;
-		}
-	}
-	// They said it was ok, so here we can clean out the folder:
-	if(SIDNumFilesInFolder !== 0){
-		for await (const entry of pathOfFolderToSaveInto.values()) {
-			// entry.name entry.kind
-			try{
-				if(entry.kind == "file"){
-					pathOfFolderToSaveInto.removeEntry(entry.name);
-				}
-				else{
-					pathOfFolderToSaveInto.removeEntry(entry.name, { recursive: true });
-				}
-			}
-			catch(err){}
-		}
+		SIDWarnAboutEmptyFolder();
+		return;
 	}
 	
 	// Now to actually save all the images as files...       *** *** ***
@@ -2583,8 +2575,9 @@ async function SIDActuallySavePagesBtnFunction(){
 	
 	SIDFilesToHandle = arrayOfCurrentImages.length;
 	SIDFilesHandled = 0;
-	//var i = 0;
+	document.getElementById('SIDHeader').innerHTML = 'Waiting For Permission...';
 	for(var i = 0; i < SIDFilesToHandle; ++i){
+		
 		var name = "" + SIDNameForFiles + (i + 1) + '.png';
 		var fileHandle = await pathOfFolderToSaveInto.getFileHandle(name, { create: true });
 		
@@ -2592,12 +2585,12 @@ async function SIDActuallySavePagesBtnFunction(){
 		b64str = b64str.substring(22, b64str.length); // stripping off the junk at the beginning
 		
 		SIDWriteFile(fileHandle, SIDBase64toBlob(b64str));
+		document.getElementById('SIDHeader').innerHTML = 'Saved Page ' + (i + 1) + "....";
 	}
-	// Todo: figure out if things went correctly and then close save window. *** *** *** *** *** *** *** ***
-	//safeToClose = true;
-    //document.getElementById('SIDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
-	alert('Pages Saved To Folder.');
-	
+}
+
+function SIDWarnAboutEmptyFolder(){
+	alert("Error:\nThe folder you chose seems to have other files and/or folders in it. This program can only save images into an empty folder. You will need to choose a different folder that is empty. Here are a few options regarding how to proceed: \n\n1. Manually delete everything in that folder and then select it again via this window.\n2. Select a different folder that is currently empty.\n3. Create a new  empty sub-folder within that folder and select that.\n\nRegardless of how you choose to proceed the folder you select must be empty in order to be able to save the images into it.");
 }
 
 
@@ -2610,6 +2603,15 @@ async function SIDWriteFile(fileHandle, contents) {
 
   // Close the file and write the contents to disk.
   await writable.close();
+  SIDFilesHandled++;
+  if(SIDFilesHandled == SIDFilesToHandle){
+	  alert('Images saved to folder.');
+	  safeToClose = true;
+	  pathOfFolderToSaveInto = '';
+	  SIDNumFilesInFolder = 0;
+	  document.getElementById('SIDHeader').innerHTML = 'Save Images';
+	  document.getElementById('SIDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
+  }
 }
 
 
