@@ -422,7 +422,7 @@ function adjustSizeOfMenuButtonsToScreenSize(){
 
 function initializeGlobalVariables(){ // These have to be done after the app has had a chance to load. Otherwise they will fail.
   context = document.getElementById('canvas1').getContext('2d');
-  eraserContext = document.getElementById('eraserCanvas').getContext('2d');
+  eraserContext = document.getElementById('eraserCanvas').getContext('2d', { willReadFrequently: true });
 }
 
 function initializeCanvas(){
@@ -3209,6 +3209,34 @@ function OPDInsertColoredPage(){ // eslint-disable-line no-unused-vars
   document.getElementById('OPDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
 }
 
+// Here is the function that inserts a page consisting of an image that the user opens:
+// Can't use insertTemplateAsPage because of tainted canvas issue. Must use 
+// insertPageUsingImage directly now:
+// This function gets called when the user clicks the "Insert Page Using Image" button
+// and selects a valid image file.
+function OPDInsertPageFromImage(input){ // eslint-disable-line no-unused-vars
+	var reader;
+	if (input.files && input.files[0]) {
+		reader = new FileReader();
+		reader.onload = function(e) {
+		  // No that we have the base64 data that represents the image they selected
+		  // we can send it on to the next function for processing:
+		  OPDHandleDataURL(e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+// This function processes the base64 data url of the image they chose:
+function OPDHandleDataURL(du){
+	var i = new Image();
+	i.onload = function(){
+		// When the image loads, we can inert it into the document:
+		insertPageUsingImage(this);
+		document.getElementById('OPDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
+	};
+	i.src = "" + du;
+}
 
 
 // ***************************** END OF CODE FOR OTHER WINDOWS!!!

@@ -165,7 +165,7 @@
       <canvas id="canvas1" onmousedown="MCMDown(event);" ontouchstart="MCTDown(event);" onmousemove="MCMMoved(event);" ontouchmove="MCTMoved(event);" onmouseup="MCMEnded(event);" onmouseleave="MCMEnded(event);" ontouchend="MCTEnded(event);" ontouchleave="MCTEnded(event);" ontouchcancel="MCTEnded(event);" onkeydown="recieveKeyboardInputFromCanvas(event);" tabindex="0" width="2200" height="1700"></canvas>
     </div>
     <div id="eraserCanvasDiv">
-      <canvas id="eraserCanvas" width="2200" height="1700"></canvas>
+      <canvas id="eraserCanvas" width="2200" height="1700" willReadFrequently="true"></canvas>
     </div>
     
     <!--
@@ -266,7 +266,7 @@
           
           <p><strong>If you have not already done so, please read through the following notes about how this program saves images:</strong></p>
           <ol id="SIDOrderedList">
-            <li><strong>Warning:</strong> This program can only save images into an empty folder You will receive an error message if you choose a folder that is not empty. Thus, it is recommended that you create a new empty folder and choose it rather than using a folder that has other content in it.</li>
+            <li><strong>Warning:</strong> This program can only save images into an empty folder. You will receive an error message if you choose a folder that is not empty. Thus, it is recommended that you create a new empty folder and choose it rather than using a folder that has other content in it.</li>
             <li>Note that the use of this dialog involves a multi-step process: First click/tap the "Choose Folder" button and select an empty folder or create a new empty folder and select it. Next, choose "View Files" on the popup that appears. From there click/tap the "Save Images To Chosen Folder" button and choose "Save Changes" in the popup that appears. The pages will then be saved as images into the folder you chose.</li>
             <li>The text that you specify below will get added to all of the PNG Image file names. This is useful if, for example, you want all of the images to have names such as "Page1.png, Page2.png, Page3.png..." etc. However, only uppercase & lowercase letters, numbers, dashes, and underscores are accepted in this text box, so if you wish to add a space, you will need to use an underscore or dash instead.</li>
             <li>If you wish to give your students a single file instead of many individual image files, (which is highly recommend), you can add all of the image files to a zip file by selecting all of them, (The keyboard shortcut to do this is Ctrl+a), right-clicking over one of them, and choosing to send them to a compressed (zipped) folder. Your students can then download this single zip file, and extract the contents into a folder on their computer. For more details, check out the "FAQ" section of our website, (<a class="webLikeLinks" href="http://www.rogersmathwhiteboard.com" target="_blank" >rogersmathwhiteboard.com</a>). The first question contains links that explain this process in detail.</li>
@@ -1030,7 +1030,7 @@ Public License instead of this License.
     </div>
     
     <!--Here is the insertScreenshot dialog-->
-    
+    <!-- ****START WORK HERE*** -->
     <!--Here is the insertOtherPage dialog-->
     
     <div id="otherPageDialog" class="modalDialogs">
@@ -1041,7 +1041,9 @@ Public License instead of this License.
           
           <!--These are all of the templates/options that can be inserted/used. The uppermost ones call functions as
           opposed to inserting the applicable template.-->
-          <a onclick="alert('Sorry, image insertion is only available in the full version.');"><img class="OPDImages" src="images/other_templates/From_Image.png" alt="Insert Page Using an Image button"></a>
+          <!--<a onclick="OPDInsertPageFromImage();"><img class="OPDImages" src="images/other_templates/From_Image.png" alt="Insert Page Using an Image button"></a>-->
+          <label for="OPDImage-input" class="modalBoxKeypadBtns">Insert Page Using Image</label>
+          <input type="file" onchange="OPDInsertPageFromImage(this); this.value = null;" id="OPDImage-input" accept="image/jpeg, image/png, image/jpg" style="display: none;">
           <p>↑ Insert Page Using an Image</p>
           <a onclick="OPDInsertColoredPage();"><img class="OPDImages" src="images/other_templates/Colored_Page.png" alt="Insert colored page button"></a>
           <p>↑ Colored Page</p>
