@@ -3152,6 +3152,686 @@ function OSDCheckForEnter(e){ // eslint-disable-line no-unused-vars
 
 // ********Here is the code for the insertScreenshotDialog:********
 
+
+
+
+// Here are the variables used in the screenshot process:
+var ISDCanInsert = false;
+var ISDCanUseTool = false;
+var ISDAreaSelected = false;
+var ISDScreenShotORIGINAL;
+var ISDXScale;
+var ISDYScale;
+var ISDImageToReturn;
+var ISDCanvas = null;
+var ISDTempCanvasForInterval = 'NA';
+var ISDContext = 'NA';
+var ISDTempX = 'NA';
+var ISDTempY = 'NA';
+var ISDPrevX = 'NA';
+var ISDPrevY = 'NA';
+var ISDClearSelectionBtn = null;
+var ISDLocationDropdown = null;
+var ISDExtraTextLabel = null;
+var ISDExtraBreak = null;
+var ISDExtraBreak2 = null;
+var ISDExtraBreak3 = null;
+var ISDExtraTextLabel2 = null;
+var ISDExtraTextLabel3 = null;
+var ISDBackgroundColorDropdown = null;
+var ISDCroppingMethodDropdown = null;
+// Some stuff below came from  https://jsfiddle.net/75Lmbf2o/
+const ISDDisplayMediaOptions = {
+  video: {
+    cursor: "never"
+  },
+  audio: false
+};
+var ISDVideoElem = document.createElement('video');
+ISDVideoElem.autoplay = true;
+var ISDTheyAborted = false;
+
+// Here is the function that readies the insert screenshot dialog:
+function ISDReadyInsertScreenshotDialog(){ // eslint-disable-line no-unused-vars
+	ISDTheyAborted = false;
+	ISDCanInsert = false;
+	ISDAreaSelected = false;
+	// clear out the dialog:
+	// eslint-disable-next-line max-len
+	document.getElementById('ISDContentHeader').innerHTML = 'Click/tap the button below to start the screenshot capture process. Note: You will need to come back to this window once your desired content has been captured.';
+	document.getElementById('ISDContentDiv').innerHTML = '';
+	// Prepare the dialog with some spaces:
+	var br = document.createElement('br');
+	document.getElementById('ISDContentDiv').appendChild(br);
+	document.getElementById('ISDContentDiv').appendChild(br);
+	document.getElementById('ISDContentDiv').appendChild(br);
+	// add in a button:
+	var btn = document.createElement('button');
+	btn.innerHTML = "Start Screenshot Capture Process.";
+	btn.setAttribute('class', 'modalBoxKeypadBtns');
+	btn.setAttribute('onclick', 'ISDStartScreenshotProcess();');
+	document.getElementById('ISDContentDiv').appendChild(btn);
+}
+
+async function ISDStartScreenshotProcess(){
+	ISDTheyAborted = false;
+	ISDVideoElem.srcObject = null;
+	ISDVideoElem = document.createElement('video');
+	ISDVideoElem.autoplay = true;
+	ISDVideoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(ISDDisplayMediaOptions).catch(ISDOnError);
+	setTimeout(() => ISDProceed(), 1000);
+	
+}
+
+function ISDStopCapture() {
+	if(ISDTheyAborted){return;}
+	let tracks = ISDVideoElem.srcObject.getTracks();
+	tracks.forEach(track => track.stop());
+	ISDVideoElem.srcObject = null;
+}
+
+function ISDGetScreenshotInBase64() {
+  if(ISDTheyAborted){return;}
+  let canvas = document.createElement('canvas');
+  let context = canvas.getContext('2d');
+  let [w, h] = [ISDVideoElem.videoWidth, ISDVideoElem.videoHeight];
+  canvas.width =  w;
+  canvas.height = h;
+  context.drawImage(ISDVideoElem, 0, 0, w, h);
+  ISDStopCapture();
+  ISDScreenShotORIGINAL = canvas.toDataURL();
+}
+
+function ISDProceed(){
+	if(ISDTheyAborted){return;}
+	ISDGetScreenshotInBase64();
+	document.getElementById('ISDContentDiv').innerHTML = '';
+	ISDReadyForCroping();
+}
+
+function ISDOnError(){
+	ISDTheyAborted = true;
+	ISDVideoElem.srcObject = null;
+	ISDVideoElem = document.createElement('video');
+	ISDVideoElem.autoplay = true;
+}
+
+
+// When the image has been obtained we will start the process of cropping it:
+function ISDReadyForCroping(){
+  // Put screenshot in canvas of right size
+  var img = new Image();
+  img.onload = function (){
+    ISDCanvas = null;
+    ISDCanvas = document.createElement('canvas');
+    ISDCanvas.width = img.naturalWidth;
+    ISDCanvas.height = img.naturalHeight;
+    document.getElementById('ISDContentDiv').appendChild(ISDCanvas);
+    ISDContext = ISDCanvas.getContext('2d', { willReadFrequently: true });
+    ISDContext.drawImage(img, 0, 0, ISDCanvas.width, ISDCanvas.height);
+    
+    ISDFixCanvas();
+  };
+  img.src = ISDScreenShotORIGINAL;
+}
+
+// This function attempts to crop the canvas and remove the black borders:
+// It also takes the image and renders a preview of it so that the user
+// can see all of it & perhaps crop it.
+function ISDFixCanvas(){
+  var horizontalPixels = ISDContext.getImageData(0, 360, 640, 1);
+  var verticalPixels = ISDContext.getImageData(640, 0, 1, 360);
+  var xPixelsToCrop = 0;
+  var yPixelsToCrop = 0;
+  var pixelCounter = 0;
+  var i = 0;
+  
+  for (i = 0; i < horizontalPixels.data.length; i += 4){
+    if(horizontalPixels.data[i] !== 0 || horizontalPixels.data[i + 1] !== 0 || horizontalPixels.data[i + 2] !== 0){
+      xPixelsToCrop = pixelCounter;
+      i = horizontalPixels.data.length;
+    }
+    else{
+      pixelCounter += 1;
+    }
+  }
+  
+  pixelCounter = 0;
+  
+  for (i = 0; i < verticalPixels.data.length; i += 4){
+    if(verticalPixels.data[i] !== 0 || verticalPixels.data[i + 1] !== 0 || verticalPixels.data[i + 2] !== 0){
+      yPixelsToCrop = pixelCounter;
+      i = verticalPixels.data.length;
+    }
+    else{
+      pixelCounter += 1;
+    }
+  }
+  
+  var picture = ISDContext.getImageData(0, 0, ISDContext.canvas.width, ISDContext.canvas.height);
+  ISDCanvas.width = ISDCanvas.width - (2 * xPixelsToCrop);
+  ISDCanvas.height = ISDCanvas.height - (2 * yPixelsToCrop);
+  ISDContext.putImageData(picture, (0 - xPixelsToCrop), (0 - yPixelsToCrop));
+  // 1. capture image from canvas & save for inserting, 2. draw preview to fit into window size.
+  
+  ISDImageToReturn = null;
+  ISDImageToReturn = new Image();
+  ISDImageToReturn.onload = function (){
+    ISDDisplayImageOnCanvas(ISDImageToReturn, ISDImageToReturn.naturalWidth, ISDImageToReturn.naturalHeight);
+    
+    // Here seems to be the right place to add the event listeners to the canvas.
+    // We just have to remember to remove them when the window closes.
+    ISDAddTouchAndClickEventHandelers();
+    // eslint-disable-next-line max-len
+    document.getElementById('ISDContentHeader').innerHTML = 'Select the region you would like to insert, or click/tap OK to insert the entire screenshot.<br>You can also specify the location where the selected region is placed using the drop-down below the image.';
+    // And add the clear selection button, insertion location dropdown, * background color dropdown:
+    
+    ISDAddElementsForSelectRegion();
+    
+    // Also here is where to make the ok button work.
+    ISDCanInsert = true;
+  };
+  ISDImageToReturn.src = ISDContext.canvas.toDataURL('image/png');
+}
+
+// Here is the function that adds the event handlers for the canvas that allows the user to select a region of
+// the captured screenshot to insert. This is an important exception from the formality of making these linkages
+// inside of the HTML.
+function ISDAddTouchAndClickEventHandelers(){
+  ISDCanvas.addEventListener('mousedown', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentDown(e.pageX - offset.left, e.pageY - offset.top);
+  });
+  ISDCanvas.addEventListener('touchstart', function (e){
+    var offset = getCoords(ISDCanvas);
+    if(e.touches.length === 1){
+      ISDInstrumentDown(e.changedTouches[0].pageX - offset.left, e.changedTouches[0].pageY - offset.top);
+      e.preventDefault();
+    }
+    else    {
+      // Here we are ignoring multi-touch. It is likely a stray elbow or something anyway, so no real reason to do anything.
+      ISDInstrumentUp(ISDPrevX, ISDPrevY);
+    }
+  });
+  ISDCanvas.addEventListener('mousemove', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentMoved(e.pageX - offset.left, e.pageY - offset.top);
+  });
+  ISDCanvas.addEventListener('touchmove', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentMoved(e.changedTouches[0].pageX - offset.left, e.changedTouches[0].pageY - offset.top);
+    e.preventDefault();
+  });
+  ISDCanvas.addEventListener('mouseup', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentUp(e.pageX - offset.left, e.pageY - offset.top);
+  });
+  ISDCanvas.addEventListener('mouseleave', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentUp(e.pageX - offset.left, e.pageY - offset.top);
+  });
+  ISDCanvas.addEventListener('touchend', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentUp(e.changedTouches[0].pageX - offset.left, e.changedTouches[0].pageY - offset.top);
+    e.preventDefault();
+  });
+  ISDCanvas.addEventListener('touchleave', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentUp(e.changedTouches[0].pageX - offset.left, e.changedTouches[0].pageY - offset.top);
+    e.preventDefault();
+  });
+  ISDCanvas.addEventListener('touchcancel', function (e){
+    var offset = getCoords(ISDCanvas);
+    ISDInstrumentUp(e.changedTouches[0].pageX - offset.left, e.changedTouches[0].pageY - offset.top);
+    e.preventDefault();
+  });
+}
+
+// This function adds the dropdowns and related HTML elements for the select region dropdown
+function ISDAddElementsForSelectRegion(){
+  ISDExtraBreak = document.createElement('br');
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraBreak);
+  
+  ISDClearSelectionBtn = document.createElement('a');
+  ISDClearSelectionBtn.setAttribute('class', 'modalBoxKeypadBtns');
+  ISDClearSelectionBtn.setAttribute('onclick', 'ISDCancelSelect();');
+  ISDClearSelectionBtn.innerHTML = 'Clear Selection';
+  
+  document.getElementById('ISDContentDiv').appendChild(ISDClearSelectionBtn);
+  
+  ISDExtraTextLabel = document.createElement('p');
+  ISDExtraTextLabel.innerHTML = 'Place selected region in:';
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraTextLabel);
+  
+  ISDAddLocationDropdown();
+  
+  ISDExtraBreak2 = document.createElement('br');
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraBreak2);
+  
+  ISDExtraTextLabel2 = document.createElement('p');
+  ISDExtraTextLabel2.innerHTML = 'Background Color:';
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraTextLabel2);
+  
+  ISDBackgroundColorDropdown = document.createElement('select');
+  ISDBackgroundColorDropdown.style.fontSize = '30px';
+  ISDBackgroundColorDropdown.style.margin = '0px 0px 0px 0px';
+  
+  // Add the entries to the background color dropdown:
+  var options = ['white', 'color chosen']; // ----Visible!
+  var optionValues = ['white', 'globalcolor'];
+  
+  var opt = null;
+  
+  for(var i = 0; i < options.length; i++){
+    opt = document.createElement('option');
+    opt.setAttribute('value', optionValues[i]);
+    opt.innerHTML = options[i];
+    ISDBackgroundColorDropdown.appendChild(opt);
+  }
+  
+  document.getElementById('ISDContentDiv').appendChild(ISDBackgroundColorDropdown);
+  ISDAddCroppingMethodDropdown();
+}
+
+// This function adds the HTML elements related to the location dropdown:
+function ISDAddLocationDropdown(){
+  ISDLocationDropdown = document.createElement('select');
+  ISDLocationDropdown.style.fontSize = '30px';
+  
+  // Add the entries to the location dropdown:
+  var options = ['top left corner', 'top right corner', 'bottom left corner', 'bottom right corner', 'center']; // ----Visible!
+  var optionValues = ['topleft', 'topright', 'bottomleft', 'bottomright', 'center'];
+  
+  var opt = null;
+  
+  for(var i = 0; i < options.length; i++){
+    opt = document.createElement('option');
+    opt.setAttribute('value', optionValues[i]);
+    opt.innerHTML = options[i];
+    ISDLocationDropdown.appendChild(opt);
+  }
+  
+  document.getElementById('ISDContentDiv').appendChild(ISDLocationDropdown);
+}
+
+// This function adds the HTML elements related to the cropping dropdown:
+function ISDAddCroppingMethodDropdown(){
+  ISDExtraBreak3 = document.createElement('br');
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraBreak3);
+  
+  ISDExtraTextLabel3 = document.createElement('p');
+  ISDExtraTextLabel3.innerHTML = 'Cropping Method:';
+  document.getElementById('ISDContentDiv').appendChild(ISDExtraTextLabel3);
+  
+  ISDCroppingMethodDropdown = document.createElement('select');
+  ISDCroppingMethodDropdown.style.fontSize = '30px';
+  ISDCroppingMethodDropdown.style.margin = '0px 0px 25px 0px';
+  
+  // Add the entries to the background color dropdown:
+  var options = ['paste within displayed size', 'cut to selection']; // ----Visible!
+  var optionValues = ['windowsize', 'selection'];
+  
+  var opt = null;
+  
+  for(var i = 0; i < options.length; i++){
+    opt = document.createElement('option');
+    opt.setAttribute('value', optionValues[i]);
+    opt.innerHTML = options[i];
+    ISDCroppingMethodDropdown.appendChild(opt);
+  }
+  
+  document.getElementById('ISDContentDiv').appendChild(ISDCroppingMethodDropdown);
+}
+
+// This function displays the image on the canvas at an appropriate size for the available
+// viewing area:
+function ISDDisplayImageOnCanvas(img, incommingWidth, incommingHeight){
+  if(incommingWidth === 0 || incommingHeight === 0 || typeof incommingWidth === 'undefined' ||
+  typeof incommingHeight === 'undefined' || incommingWidth === null || incommingHeight === null){
+    throw new Error('ISDDisplayImageOnCanvas has been called before the image has loaded!');
+  }
+  var dlg = ISDGetAvaliableDialogSpace();
+  var canvasHeight;
+  var canvasWidth;
+  
+  var proportionalHeight = (incommingHeight * dlg.availableWidth) / incommingWidth;
+  if(proportionalHeight > dlg.availableHeight){
+    // this means height is limiting dimension.
+    canvasHeight = dlg.availableHeight;
+    canvasWidth = (incommingWidth * dlg.availableHeight) / incommingHeight;
+    canvasWidth = Math.round(canvasWidth); // Without this line the image width is potentially reduced by 1 pixel every repaint.
+    ISDCanvas.width = canvasWidth;
+    ISDCanvas.height = canvasHeight;
+    ISDContext.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+  }
+  else  {  // this means width is limiting dimension.
+    canvasWidth = dlg.availableWidth;
+    canvasHeight = (incommingHeight * dlg.availableWidth) / incommingWidth;
+    canvasHeight = Math.round(canvasHeight);// Without this line the image height is potentially reduced by 1 pixel every repaint.
+    ISDCanvas.width = canvasWidth;
+    ISDCanvas.height = canvasHeight;
+    ISDContext.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+  }
+  
+  // Calculate & save scale factor in relation to actual image.
+  ISDXScale = ISDImageToReturn.naturalWidth / ISDCanvas.width;
+  ISDYScale = ISDImageToReturn.naturalHeight / ISDCanvas.height;
+}
+
+// This function gets the available viewing area so that we can determine how big to make the screenshot preview.
+function ISDGetAvaliableDialogSpace(){
+  // Note that this will need to be adjusted if the insert screenshot dialog css is changed in the future:
+  var x = (0.88 * window.innerWidth) - 145;
+  var y = (0.68 * window.innerHeight) - 21;
+  x = Math.round(x);
+  y = Math.round(y);
+  return { availableWidth: x, availableHeight: y };
+}
+
+// These three functions handle touch/mouse input from the preview:
+function ISDInstrumentDown(x, y){
+  ISDCanUseTool = true;
+  ISDSelectFunction(x, y, 'down');
+}
+
+function ISDInstrumentMoved(x, y){
+  if(ISDCanUseTool){
+    ISDSelectFunction(x, y, 'move');
+  }
+}
+
+function ISDInstrumentUp(x, y){
+  if(ISDCanUseTool){
+    ISDSelectFunction(x, y, 'up');
+  }
+  ISDCanUseTool = false;
+}
+
+// This function is essentially the same as the one for the regular select tool,
+// it is only specific to the screenshot dialog:
+function ISDSelectFunction(x, y, phase){
+  switch(phase){
+  case 'down':
+    
+    ISDCancelSelect();
+    ISDPrevX = x;
+    ISDPrevY = y;
+    ISDTempX = x;
+    ISDTempY = y;
+    ISDTempCanvasForInterval = 'NA';
+    ISDTempCanvasForInterval = new Image();
+    ISDTempCanvasForInterval.src = ISDContext.canvas.toDataURL('image/png');
+    
+    break;
+  case 'move':
+    
+    ISDPrevX = x;
+    ISDPrevY = y;
+    ISDContext.drawImage(ISDTempCanvasForInterval, 0, 0, ISDContext.canvas.width, ISDContext.canvas.height);
+    ISDContext.strokeStyle = 'rgba(0, 0, 0, 1.0)';
+    ISDContext.lineJoin = 'round';
+    ISDContext.lineWidth = 1;
+    ISDContext.beginPath();
+    ISDContext.moveTo(ISDTempX, ISDTempY);
+    ISDContext.lineTo(ISDPrevX, ISDTempY);
+    ISDContext.lineTo(ISDPrevX, ISDPrevY);
+    ISDContext.lineTo(ISDTempX, ISDPrevY);
+    ISDContext.closePath();
+    ISDContext.stroke();
+    
+    break;
+  case 'up':
+    
+    ISDAreaSelected = true;
+    ISDContext.drawImage(ISDTempCanvasForInterval, 0, 0, ISDContext.canvas.width, ISDContext.canvas.height);
+    ISDContext.strokeStyle = 'rgba(0, 0, 0, 1.0)';
+    ISDContext.lineJoin = 'round';
+    ISDContext.lineWidth = 1;
+    ISDContext.beginPath();
+    ISDContext.moveTo(ISDTempX, ISDTempY);
+    ISDContext.lineTo(ISDPrevX, ISDTempY);
+    ISDContext.lineTo(ISDPrevX, ISDPrevY);
+    ISDContext.lineTo(ISDTempX, ISDPrevY);
+    ISDContext.closePath();
+    ISDContext.stroke();
+    
+    var tempWidth = Math.abs(ISDTempX - ISDPrevX);
+    var tempHeight = Math.abs(ISDTempY - ISDPrevY);
+    if(tempWidth === 0 || tempHeight === 0){
+      ISDCancelSelect();
+    }
+    
+    break;
+  default:
+    throw new Error('Invalid phase in ISDSelectFunction: ' + phase);
+  }
+}
+
+// Here is the function that cancels a selected region for the screenshot preview:
+function ISDCancelSelect(){
+  if(ISDAreaSelected){
+    ISDContext.drawImage(ISDTempCanvasForInterval, 0, 0, ISDContext.canvas.width, ISDContext.canvas.height);
+    ISDPrevX = 'NA';
+    ISDPrevY = 'NA';
+    ISDTempX = 'NA';
+    ISDTempY = 'NA';
+    ISDAreaSelected = false;
+  }
+}
+
+// Here is the function that runs when the user chooses to insert their screenshot.
+// It manages the entire process of getting the necessary information, cropping if
+// necessary, placing the selection in the appropriate place, cleanup, etc...
+function ISDOkBtnFunction(){ // eslint-disable-line no-unused-vars, max-statements
+  if(ISDCanInsert){
+    if(ISDAreaSelected){
+      // Now we have to determine where the user wants the selected region, what background color they want,
+      // scale the coordinates to original size, re-size canvas to size of ISDImageToReturn, pant ISDImageToReturn onto it,
+      // grab selected region from canvas, paint canvas with applicable color, paint selected region in correct spot,
+      // grab data from canvas, make image from data, call insertPageUsingImage() when the image loads.
+      
+      var selectionWidth = Math.abs(ISDTempX - ISDPrevX);
+      var selectionHeight = Math.abs(ISDTempY - ISDPrevY);
+      selectionWidth = Math.round(selectionWidth * ISDXScale);
+      selectionHeight = Math.round(selectionHeight * ISDYScale);
+      
+      var selectionLocationX = Math.min(ISDTempX, ISDPrevX);
+      var selectionLocationY = Math.min(ISDTempY, ISDPrevY);
+      selectionLocationX = Math.round(selectionLocationX * ISDXScale);
+      selectionLocationY = Math.round(selectionLocationY * ISDYScale);
+      
+      var insertionPoint = { x: 0, y: 0 };
+      if(ISDCroppingMethodDropdown.value === 'windowsize'){
+        insertionPoint = ISDCalculateInsertionPoint(ISDLocationDropdown.value, ISDImageToReturn.width, ISDImageToReturn.height,
+        selectionWidth, selectionHeight);
+      }
+      
+      var bgColor = 'white';
+      if(useColorInvertedTemplates){
+        bgColor = 'black';
+      }
+      if(ISDBackgroundColorDropdown.value !== 'white'){
+        bgColor = instrumentColor;
+      }
+      
+      // At this point, we have all the information we need to start working with the canvas...
+      
+      ISDCanvas.width = ISDImageToReturn.width;
+      ISDCanvas.height = ISDImageToReturn.height;
+      ISDContext.drawImage(ISDImageToReturn, 0, 0, ISDImageToReturn.width, ISDImageToReturn.height);
+      
+      // Here is where we can make sure the selection is within the borders of the image:
+      var difference = 0;
+      if(selectionLocationX < 0){
+        difference = Math.abs(0 - selectionLocationX);
+        selectionLocationX = 0;
+        selectionWidth = selectionWidth - difference;
+      }
+      if(selectionLocationY < 0){
+        difference = Math.abs(0 - selectionLocationY);
+        selectionLocationY = 0;
+        selectionHeight = selectionHeight - difference;
+      }
+      if((selectionLocationX + selectionWidth) > ISDImageToReturn.width){
+        difference = Math.abs((selectionLocationX + selectionWidth) - ISDImageToReturn.width);
+        selectionWidth = selectionWidth - difference;
+      }
+      if((selectionLocationY + selectionHeight) > ISDImageToReturn.height){
+        difference = Math.abs((selectionLocationY + selectionHeight) - ISDImageToReturn.height);
+        selectionHeight = selectionHeight - difference;
+      }
+      
+      var selectionData = ISDContext.getImageData(selectionLocationX, selectionLocationY, selectionWidth, selectionHeight);
+      
+      if(ISDCroppingMethodDropdown.value !== 'windowsize'){
+        ISDCanvas.width = selectionWidth;
+        ISDCanvas.height = selectionHeight;
+      }
+      
+      ISDContext.beginPath();
+      ISDContext.fillStyle = bgColor;
+      ISDContext.rect(0, 0, ISDContext.canvas.width, ISDContext.canvas.height);
+      ISDContext.fill();
+      
+      ISDContext.putImageData(selectionData, insertionPoint.x, insertionPoint.y);
+      
+      ISDImageToReturn = null;
+      ISDImageToReturn = new Image();
+      ISDImageToReturn.onload = function (){
+        insertPageUsingImage(this);
+      };
+      ISDImageToReturn.src = ISDContext.canvas.toDataURL('image/png');
+    }
+    else{
+      // Here we need to call insertPageUsingImage(). At this point the image will already exist and be loaded.
+      insertPageUsingImage(ISDImageToReturn);
+    }
+    document.getElementById('ISDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
+  }
+}
+
+// This is the function that calculates the insertion point for the screenshot.
+function ISDCalculateInsertionPoint(insertionLocationStr, orgImageX, orgImageY, selSizeX, selSizeY){
+  var toRet = { x: 0, y: 0 };
+  switch(insertionLocationStr){
+  case 'topright':
+    
+    toRet.x = orgImageX - selSizeX;
+    
+    break;
+  case 'bottomleft':
+    
+    toRet.y = orgImageY - selSizeY;
+    
+    break;
+  case 'bottomright':
+    
+    toRet.x = orgImageX - selSizeX;
+    toRet.y = orgImageY - selSizeY;
+    
+    break;
+  case 'center':
+    
+    var halfOrgImageX = Math.round(orgImageX / 2);
+    var halfOrgImageY = Math.round(orgImageY / 2);
+    var halfSelSizeX = Math.round(selSizeX / 2);
+    var halfSelSizeY = Math.round(selSizeY / 2);
+    
+    toRet.x = halfOrgImageX - halfSelSizeX;
+    toRet.y = halfOrgImageY - halfSelSizeY;
+    
+    break;
+  default:
+    // Here we do nothing since for the top left, the coordinates are already correct. 
+    // Also, if something weird happens, we want to put it in the top left corner anyhow, so doing nothing works.
+    break;
+  }
+  return toRet;
+}
+
+// Here is the first cleanup function for the insert screenshot section. It manages the
+// entire cleanup process calling other functions where needed.
+function ISDCleanupFunction(){ // eslint-disable-line no-unused-vars, max-statements
+  // Here is where we will remove the event listeners from the canvas & do any other necessary cleanup.
+  ISDSimpleVariableCleanup();
+  if(ISDCanvas !== null && typeof ISDCanvas !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDCanvas);
+    ISDCanvas = null;
+  }
+  if(ISDExtraBreak !== null && typeof ISDExtraBreak !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraBreak);
+    ISDExtraBreak = null;
+  }
+  if(ISDClearSelectionBtn !== null && typeof ISDClearSelectionBtn !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDClearSelectionBtn);
+    ISDClearSelectionBtn = null;
+  }
+  if(ISDExtraTextLabel !== null && typeof ISDExtraTextLabel !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraTextLabel);
+    ISDExtraTextLabel = null;
+  }
+  if(ISDLocationDropdown !== null && typeof ISDLocationDropdown !== 'undefined'){
+    while (ISDLocationDropdown.firstChild){
+      ISDLocationDropdown.removeChild(ISDLocationDropdown.firstChild);
+    }
+    document.getElementById('ISDContentDiv').removeChild(ISDLocationDropdown);
+    ISDLocationDropdown = null;
+  }
+  if(ISDExtraBreak2 !== null && typeof ISDExtraBreak2 !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraBreak2);
+    ISDExtraBreak2 = null;
+  }
+  if(ISDExtraTextLabel2 !== null && typeof ISDExtraTextLabel2 !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraTextLabel2);
+    ISDExtraTextLabel2 = null;
+  }
+  if(ISDBackgroundColorDropdown !== null && typeof ISDBackgroundColorDropdown !== 'undefined'){
+    while(ISDBackgroundColorDropdown.firstChild){
+      ISDBackgroundColorDropdown.removeChild(ISDBackgroundColorDropdown.firstChild);
+    }
+    document.getElementById('ISDContentDiv').removeChild(ISDBackgroundColorDropdown);
+    ISDBackgroundColorDropdown = null;
+  }
+  if(ISDExtraBreak3 !== null && typeof ISDExtraBreak3 !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraBreak3);
+    ISDExtraBreak3 = null;
+  }
+  if(ISDExtraTextLabel3 !== null && typeof ISDExtraTextLabel3 !== 'undefined'){
+    document.getElementById('ISDContentDiv').removeChild(ISDExtraTextLabel3);
+    ISDExtraTextLabel3 = null;
+  }
+  if(ISDCroppingMethodDropdown !== null && typeof ISDCroppingMethodDropdown !== 'undefined'){
+    while(ISDCroppingMethodDropdown.firstChild){
+      ISDCroppingMethodDropdown.removeChild(ISDCroppingMethodDropdown.firstChild);
+    }
+    document.getElementById('ISDContentDiv').removeChild(ISDCroppingMethodDropdown);
+    ISDCroppingMethodDropdown = null;
+  }
+}
+
+// Here is a helper function for the above cleanup function. It focuses on cleaning up the various
+// variables used.
+function ISDSimpleVariableCleanup(){
+  ISDPrevX = 'NA';
+  ISDPrevY = 'NA';
+  ISDTempX = 'NA';
+  ISDTempY = 'NA';
+  ISDAreaSelected = false;
+  ISDCanInsert = false;
+  ISDCanUseTool = false;
+  ISDScreenShotORIGINAL = null;
+  ISDXScale = null;
+  ISDYScale = null;
+  ISDImageToReturn = null;
+  ISDTempCanvasForInterval = 'NA';
+  ISDContext = 'NA';
+  ISDTheyAborted = false;
+}
+
+
+
+
+
 // ********Here is the code for the otherPageDialog:********
 
 // Here is the function that inserts pages from the otherPage dialog.
