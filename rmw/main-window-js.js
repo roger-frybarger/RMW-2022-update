@@ -3807,6 +3807,7 @@ function ISDCleanupFunction(){ // eslint-disable-line no-unused-vars, max-statem
     document.getElementById('ISDContentDiv').removeChild(ISDCroppingMethodDropdown);
     ISDCroppingMethodDropdown = null;
   }
+  focusMainCanvas();
 }
 
 // Here is a helper function for the above cleanup function. It focuses on cleaning up the various
@@ -4612,6 +4613,10 @@ echo -e $relatedCode >> outputb64code.txt
  *  
  */
 
+
+function focusMainCanvas(){
+	var el = document.getElementById('canvas1').focus();
+}
 
 // Since this file is now loaded we can do two things to get rid of the unnecessary error messages:
 OPDReadyOtherPageDialog();

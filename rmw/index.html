@@ -183,7 +183,7 @@
     
     <div id="settingsDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="SDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="settings dialog close button"></a>
+        <a draggable="false" id="SDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="settings dialog close button"></a>
         <h2>Settings:</h2>
         <div class="modalBoxContent">
           <p>Note: These settings will only remain in effect until you close or refresh the app. Unfortunately, that means you will probably need to re-adjust them to your liking every time you refresh or re-start the app. Portability comes with its costs.</p>
@@ -222,7 +222,7 @@
     
     <div id="openImagesDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="OIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="open images dialog close button"></a>
+        <a draggable="false" id="OIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="open images dialog close button"></a>
         <h2 id="OIDHeader">Open Images</h2>
         <div class="modalBoxContent">
           
@@ -259,7 +259,7 @@
     
     <div id="saveImagesDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="SIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="save images dialog close button"></a>
+        <a draggable="false" id="SIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="save images dialog close button"></a>
         <h2 id="SIDHeader">Save Images</h2>
         <div class="modalBoxContent">
           
@@ -283,7 +283,7 @@
     
     <div id="helpDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="HDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="help dialog close button"></a>
+        <a draggable="false" id="HDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="help dialog close button"></a>
         <h2>Here are some help topics:</h2>
         <div class="modalBoxContent">
           
@@ -438,7 +438,7 @@ Last updated: Aug 9, 2016.
     
     <div id="aboutDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="openModalTestCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="about dialog close button"></a>
+        <a draggable="false" id="openModalTestCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="about dialog close button"></a>
         <img id="ADMainIcon" src="images/icons/scribble-128.png" alt="Rogers Math Whiteboard Icon">
         <h2 id="ADTitle">About Roger's Math Whiteboard Version 3.14159265358979</h2>
         <div id="ADContentArea" class="modalBoxContent">
@@ -841,7 +841,7 @@ Public License instead of this License.
     
     <div id="fileOtherDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="FODCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="file other dialog close button"></a>
+        <a draggable="false" id="FODCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="file other dialog close button"></a>
         <h2>Other Options/Tools:</h2>
         <div class="modalBoxContent">
           
@@ -859,7 +859,7 @@ Public License instead of this License.
     
     <div id="insertTextDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="ITDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="insert text dialog close button"></a>
+        <a draggable="false" id="ITDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="insert text dialog close button"></a>
         <h2>Insert Text:</h2>
         <div class="modalBoxContent">
           <!--All of these are the buttons that insert various symbols into the text box when clicked:-->
@@ -962,7 +962,7 @@ Public License instead of this License.
     
     <div id="otherToolDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="OTDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other tool dialog close button"></a>
+        <a draggable="false" id="OTDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="other tool dialog close button"></a>
         <h2>Other Tools:</h2>
         <div class="modalBoxContent">
           
@@ -981,7 +981,7 @@ Public License instead of this License.
     
     <div id="otherColorDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="OCDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other color dialog close button"></a>
+        <a draggable="false" id="OCDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="other color dialog close button"></a>
         <h2>Pick a Color:</h2>
         <div class="modalBoxContent">
           
@@ -1008,7 +1008,7 @@ Public License instead of this License.
     
     <div id="otherSizeDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="OSDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other size dialog close button"></a>
+        <a draggable="false" id="OSDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="other size dialog close button"></a>
         <h2>New Size:</h2>
         <div class="modalBoxContent">
           <input draggable="false" type="number"  oninput="OSDValidateInput();" onkeydown="OSDCheckForEnter(event);" id="OSDSizeTextBox" min="2" max="2000">
@@ -1056,7 +1056,7 @@ Public License instead of this License.
     
     <div id="otherPageDialog" class="modalDialogs">
       <div>
-        <a draggable="false" id="OPDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="insert other page dialog close button"></a>
+        <a draggable="false" id="OPDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns" onclick="focusMainCanvas();"><img draggable="false" src="images/icons/transparent.png" alt="insert other page dialog close button"></a>
         <h2>Click/Tap on the template that you would like to insert/use:</h2>
         <div class="modalBoxContent" id="OPDContentDiv">
           
