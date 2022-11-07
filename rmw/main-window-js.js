@@ -2973,7 +2973,7 @@ function OCDUpdateTextBoxes(){
 // It basically gets the pixel directly under their click/touch and gets its color & updates the GUI.
 function OCDOnInstrumentDown(x, y){
   var canvas = document.getElementById('OCDPickerCanvas');
-  var context = canvas.getContext('2d');
+  var context = canvas.getContext('2d', { willReadFrequently: true });
   var temp = context.getImageData(x, y, 1, 1);
   OCDRed = temp.data[0];
   OCDGreen = temp.data[1];
@@ -3834,11 +3834,51 @@ function ISDSimpleVariableCleanup(){
 
 // ********Here is the code for the otherPageDialog:********
 
+
+// This function gets the otherPageDialog ready by loading in the apropriate images:
+function OPDReadyOtherPageDialog(){
+	// First get the stuff in the dialog:
+	var root = document.getElementById('OPDContentDiv');
+	// Now get an array of all the ones that are images:
+	var imgs = root.getElementsByClassName("OPDImages");
+	for(var x in imgs){
+		// For each image, get it's parent element:
+		var pe = imgs[x].parentElement;
+		if(pe && pe.onclick){
+			// And then get the text in the onclick attribute:
+			var txt = "" + pe.onclick;
+			if(txt.includes('OPDInsertColoredPage')){
+				// If we are dealing with the colored page one we will just do it manually:
+				if(useColorInvertedTemplates){
+					imgs[x].src = getB64ForPath('Colored_Page-b.png');
+				}
+				else{
+					imgs[x].src = getB64ForPath('Colored_Page.png');
+				}
+				continue;
+			}
+			// If we arn't dealing with the colored page one we need to get the file name in
+			// the onclick attribute:
+			txt = txt.substring(txt.indexOf("Page('") +6, txt.indexOf("');"));
+			// Now that we know what image should go in this particular element
+			// we can worry about if useColorInvertedTemplates is true:
+			if(useColorInvertedTemplates){
+				txt= txt.replace(".png", "-b.png");
+			}
+			// Once we know what image to put in this particular image, we can just do it:
+			imgs[x].src = getB64ForPath(txt);
+		}
+	}
+}
+
+
+
 // Here is the function that inserts pages from the otherPage dialog.
 // Note the pattern used in naming files and how they are used 
 // depending on whether widescreen or inverted colors is selected.
 function OPDInsertPage(e){ // eslint-disable-line no-unused-vars
-  var locOfTem = e.target.src;
+  //var locOfTem = e.target.src;
+  var locOfTem = e;
   var before = locOfTem.substring(0, (locOfTem.length - 4));
   if(useWidescreenTemplates){
     before += '-wide';

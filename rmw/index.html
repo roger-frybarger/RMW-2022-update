@@ -69,15 +69,15 @@
       <ul>
         <!--These are the entries in the top nav bar. They each have to have the transparent image as the
         source because if that is removed, a border will be shown no matter how they are styled in the css-->
-        <li><a href="#settingsDialog" onclick="SDReadySettingsDialog();"><img id="settingsBtn" src="images/icons/transparent.png" alt="settings button"></a></li>
+        <li><a draggable="false" href="#settingsDialog" onclick="SDReadySettingsDialog();"><img draggable="false" id="settingsBtn" src="images/icons/transparent.png" alt="settings button"></a></li>
         <li><a draggable="false" href="#" onmousedown="undoBtnFunction();"><img draggable="false" class="topLeftButtons" id="undoBtn" src="images/icons/transparent.png" alt="undo button"></a></li>
         <li><a draggable="false" href="#" onmousedown="redoBtnFunction();"><img draggable="false" class="topLeftButtons" id="redoBtn" src="images/icons/transparent.png" alt="redo button"></a></li>
-        <li><a href="#" onclick="copyBtnFunction();"><img class="topLeftButtons" id="copyBtn" src="images/icons/transparent.png" alt="copy button"></a></li>
-        <li><a href="#" onclick="pasteBtnFunction();"><img class="topLeftButtons" id="pasteBtn" src="images/icons/transparent.png" alt="paste button"></a></li>
-        <li><a href="#" onclick="drawRectangleBtnFunction();"><img class="topLeftButtons" id="drawRectangleBtn" src="images/icons/transparent.png" alt="draw rectangle button"></a></li>
-        <li><a href="#" onclick="fillRectangleBtnFunction();"><img class="topLeftButtons" id="fillRectangleBtn" src="images/icons/transparent.png" alt="fill rectangle button"></a></li>
-        <li><a href="#" onclick="drawEllipseBtnFunction();"><img class="topLeftButtons" id="drawEllipseBtn" src="images/icons/transparent.png" alt="draw ellipse button"></a></li>
-        <li><a href="#" onclick="fillEllipseBtnFunction();"><img class="topLeftButtons" id="fillEllipseBtn" src="images/icons/transparent.png" alt="fill ellipse button"></a></li>
+        <li><a draggable="false" href="#" onclick="copyBtnFunction();"><img draggable="false" class="topLeftButtons" id="copyBtn" src="images/icons/transparent.png" alt="copy button"></a></li>
+        <li><a draggable="false" href="#" onclick="pasteBtnFunction();"><img draggable="false" class="topLeftButtons" id="pasteBtn" src="images/icons/transparent.png" alt="paste button"></a></li>
+        <li><a draggable="false" href="#" onclick="drawRectangleBtnFunction();"><img draggable="false" class="topLeftButtons" id="drawRectangleBtn" src="images/icons/transparent.png" alt="draw rectangle button"></a></li>
+        <li><a draggable="false" href="#" onclick="fillRectangleBtnFunction();"><img draggable="false" class="topLeftButtons" id="fillRectangleBtn" src="images/icons/transparent.png" alt="fill rectangle button"></a></li>
+        <li><a draggable="false" href="#" onclick="drawEllipseBtnFunction();"><img draggable="false" class="topLeftButtons" id="drawEllipseBtn" src="images/icons/transparent.png" alt="draw ellipse button"></a></li>
+        <li><a draggable="false" href="#" onclick="fillEllipseBtnFunction();"><img draggable="false" class="topLeftButtons" id="fillEllipseBtn" src="images/icons/transparent.png" alt="fill ellipse button"></a></li>
         <!--<li><a href="#" onclick="alert('Sorry, this functionality is only available in the full version. If you would like to close this app, you can use the close button on your browser.');"><img class="topRightButtons" id="topRightCloseBtn" src="images/icons/transparent.png" alt="main close button"></a></li>-->
         <!--<li><a href="#" onclick="alert('Sorry, this functionality is only available in the full version. If you would like to minimize this app, you can use the minimize button on your browser.');"><img class="topRightButtons" id="topRightMinimizeBtn" src="images/icons/transparent.png" alt="main minimize button"></a></li>-->
       </ul>
@@ -85,68 +85,67 @@
     <!--These are the entries in the side bar.-->
     <div>
       <ul id="verticalButtonBar">
-        <li class="dropdown">
-          <a class="dropbtn" onclick="fileBtnFunction();" id="fileBtn">File</a>
+        <li draggable="false" class="dropdown">
+          <a draggable="false" class="dropbtn" onclick="fileBtnFunction();" id="fileBtn">File</a>
             <div class="dropdown-content" id="fileDropdown">
-              <!--<a id="reMaximizeBtn" onclick="alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');">Re-Maximize</a>-->
-              <a href="#openImagesDialog" onclick="OIDReadyOpenImagesDialog();" id="openImagesBtn">Open Images</a>
-              <a href="#saveImagesDialog" onclick="SIDReadySaveImagesDialog();" id="saveImagesBtn">Save Images</a>
-              <a id="fileCloseBtn" onclick="window.close();">Close</a>
-              <a id="deletePageBtn" onclick="deletePageBtnFunction();">Delete Page</a>
-              <a href="#helpDialog" id="helpBtn" >Help</a>
-              <a href="#aboutDialog" onclick="ADReadyAboutDialog();" id="aboutBtn">About</a>
-              <a href="#fileOtherDialog" id="otherFileBtn">Other</a>
+              <a draggable="false" href="#openImagesDialog" onclick="OIDReadyOpenImagesDialog();" id="openImagesBtn">Open Images</a>
+              <a draggable="false" href="#saveImagesDialog" onclick="SIDReadySaveImagesDialog();" id="saveImagesBtn">Save Images</a>
+              <a draggable="false" id="fileCloseBtn" onclick="window.close();">Close</a>
+              <a draggable="false" id="deletePageBtn" onclick="deletePageBtnFunction();">Delete Page</a>
+              <a draggable="false" href="#helpDialog" id="helpBtn" >Help</a>
+              <a draggable="false" href="#aboutDialog" onclick="ADReadyAboutDialog();" id="aboutBtn">About</a>
+              <a draggable="false" href="#fileOtherDialog" id="otherFileBtn">Other</a>
             </div>
         </li>
-        <li>
-          <a class="dropbtn" onclick="toolBtnFunction();" id="toolBtn">Tool</a>
+        <li draggable="false">
+          <a draggable="false" class="dropbtn" onclick="toolBtnFunction();" id="toolBtn">Tool</a>
             <div class="dropdown-content" id="toolDropdown">
-              <a id="penToolBtn" onclick="tool = 'pen'; updateTextOfToolBtn();">Pen</a>
-              <a id="eraserToolBtn" onclick="tool = 'eraser'; updateTextOfToolBtn();">Eraser</a>
-              <a id="lineToolBtn" onclick="tool = 'line'; updateTextOfToolBtn();">Straight Line</a>
-              <a id="selectToolBtn" onclick="tool = 'select'; updateTextOfToolBtn();">Select</a>
-              <a href="#insertTextDialog" onclick="ITDReadyInsertTextDialog();" id="insertTextToolBtn">Insert Text</a>
-              <a id="identifierToolBtn" onclick="tool = 'identify'; updateTextOfToolBtn();">Identifier</a>
-              <a id="dotToolBtn" onclick="tool = 'dot'; updateTextOfToolBtn();">Dot</a>
-              <a href="#otherToolDialog" id="otherToolBtn">Other</a>
+              <a draggable="false" id="penToolBtn" onclick="tool = 'pen'; updateTextOfToolBtn();">Pen</a>
+              <a draggable="false" id="eraserToolBtn" onclick="tool = 'eraser'; updateTextOfToolBtn();">Eraser</a>
+              <a draggable="false" id="lineToolBtn" onclick="tool = 'line'; updateTextOfToolBtn();">Straight Line</a>
+              <a draggable="false" id="selectToolBtn" onclick="tool = 'select'; updateTextOfToolBtn();">Select</a>
+              <a draggable="false" href="#insertTextDialog" onclick="ITDReadyInsertTextDialog();" id="insertTextToolBtn">Insert Text</a>
+              <a draggable="false" id="identifierToolBtn" onclick="tool = 'identify'; updateTextOfToolBtn();">Identifier</a>
+              <a draggable="false" id="dotToolBtn" onclick="tool = 'dot'; updateTextOfToolBtn();">Dot</a>
+              <a draggable="false" href="#otherToolDialog" id="otherToolBtn">Other</a>
             </div>
         </li>
-        <li>
-          <a class="dropbtn" onclick="colorBtnFunction();" id="colorBtn">Color</a>
+        <li draggable="false">
+          <a draggable="false" class="dropbtn" onclick="colorBtnFunction();" id="colorBtn">Color</a>
             <div class="dropdown-content" id="colorDropdown">
-              <a id="blackBtn" onclick="instrumentColor = 'rgba(0, 0, 0, 1.0)'; updateColorOfColorBtn();">Black</a>
-              <a id="redBtn" onclick="instrumentColor = 'rgba(255, 0, 0, 1.0)'; updateColorOfColorBtn();">Red</a>
-              <a id="greenBtn" onclick="instrumentColor = 'rgba(0, 109, 0, 1.0)'; updateColorOfColorBtn();">Green</a>
-              <a id="blueBtn" onclick="instrumentColor = 'rgba(78, 78, 255, 1.0)'; updateColorOfColorBtn();">Blue</a>
-              <a id="whiteBtn" onclick="instrumentColor = 'rgba(255, 255, 255, 1.0)'; updateColorOfColorBtn();">White</a>
-              <a href="#otherColorDialog" onclick="OCDReadyOtherColorDialog();" id="otherColorBtn">Other Color</a>
+              <a draggable="false" id="blackBtn" onclick="instrumentColor = 'rgba(0, 0, 0, 1.0)'; updateColorOfColorBtn();">Black</a>
+              <a draggable="false" id="redBtn" onclick="instrumentColor = 'rgba(255, 0, 0, 1.0)'; updateColorOfColorBtn();">Red</a>
+              <a draggable="false" id="greenBtn" onclick="instrumentColor = 'rgba(0, 109, 0, 1.0)'; updateColorOfColorBtn();">Green</a>
+              <a draggable="false" id="blueBtn" onclick="instrumentColor = 'rgba(78, 78, 255, 1.0)'; updateColorOfColorBtn();">Blue</a>
+              <a draggable="false" id="whiteBtn" onclick="instrumentColor = 'rgba(255, 255, 255, 1.0)'; updateColorOfColorBtn();">White</a>
+              <a draggable="false" href="#otherColorDialog" onclick="OCDReadyOtherColorDialog();" id="otherColorBtn">Other Color</a>
             </div>
         </li>
-        <li>
-          <a class="dropbtn" onclick="sizeBtnFunction();" id="sizeBtn">Size</a>
+        <li draggable="false">
+          <a draggable="false" class="dropbtn" onclick="sizeBtnFunction();" id="sizeBtn">Size</a>
             <div class="dropdown-content" id="sizeDropdown">
-              <a id="smallSizeBtn" onclick="instrumentWidth = 2; updateTextOfSizeBtn();">Small</a>
-              <a id="mediumSizeBtn" onclick="instrumentWidth = 5; updateTextOfSizeBtn();">Medium</a>
-              <a id="largeSizeBtn" onclick="instrumentWidth = 10; updateTextOfSizeBtn();">Large</a>
-              <a href ="#otherSizeDialog" onclick="OSDReadyOtherSizeDialog();" id="otherSizeBtn">Other Size</a>
+              <a draggable="false" id="smallSizeBtn" onclick="instrumentWidth = 2; updateTextOfSizeBtn();">Small</a>
+              <a draggable="false" id="mediumSizeBtn" onclick="instrumentWidth = 5; updateTextOfSizeBtn();">Medium</a>
+              <a draggable="false" id="largeSizeBtn" onclick="instrumentWidth = 10; updateTextOfSizeBtn();">Large</a>
+              <a draggable="false" href ="#otherSizeDialog" onclick="OSDReadyOtherSizeDialog();" id="otherSizeBtn">Other Size</a>
             </div>
         </li>
-        <li>
-          <a class="dropbtn" onclick="insertPageBtnFunction();" id="insertPageBtn">Insert Page</a>
+        <li draggable="false">
+          <a draggable="false" class="dropbtn" onclick="insertPageBtnFunction();" id="insertPageBtn">Insert Page</a>
             <div class="dropdown-content" id="insertPageDropdown">
-              <a id="blankWhitePageBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_White_Page.png');">Blank White</a>
-              <a id="graphPaperPageBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_Graph_Paper_Page.png');">Graph Paper</a>
-              <a id="coordinatePlaneBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_X_Y_Graph_Paper_Page.png');">Coordinate</a>
-              <a id="screenshotBtn" href ="#insertScreenshotDialog" onclick="ISDReadyInsertScreenshotDialog();">Screenshot</a>
-              <a href ="#otherPageDialog" id="otherPageBtn">Other</a>
+              <a draggable="false" id="blankWhitePageBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_White_Page.png');">Blank White</a>
+              <a draggable="false" id="graphPaperPageBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_Graph_Paper_Page.png');">Graph Paper</a>
+              <a draggable="false" id="coordinatePlaneBtn" onclick="mainUIInsertTemplateAsPage('images/Blank_X_Y_Graph_Paper_Page.png');">Coordinate</a>
+              <a draggable="false" id="screenshotBtn" href ="#insertScreenshotDialog" onclick="ISDReadyInsertScreenshotDialog();">Screenshot</a>
+              <a draggable="false" href ="#otherPageDialog" id="otherPageBtn" onclick="OPDReadyOtherPageDialog();">Other</a>
             </div>
         </li>
         <!--Here are the two page navigation buttons. these do not move depending on the screen size:-->
-        <li>
-          <a class="btn" id="previousPageBtn" onclick="previousPageBtnFunction();">Previous Page</a>
+        <li draggable="false">
+          <a draggable="false" class="btn" id="previousPageBtn" onclick="previousPageBtnFunction();">Previous Page</a>
         </li>
-        <li>
-          <a class="btn" id="nextPageBtn" onclick="nextPageBtnFunction();">Next Page</a>
+        <li draggable="false">
+          <a draggable="false" class="btn" id="nextPageBtn" onclick="nextPageBtnFunction();">Next Page</a>
         </li>
       </ul>
     </div>
@@ -154,8 +153,8 @@
     <div id="pageTextBoxDivID">
       Page: <input type="number" name="pageTextBox" id="pageTextBoxID" oninput="pageInputBoxValidator()" onkeydown="pageInputBoxCheckForEnter(event)" value="1" min="1" max="1"><br>
     </div>
-    <div id="goBtnDivID">
-      <a class="btn" id="goBtnID" onclick="goBtnFunction();">Go</a>
+    <div id="goBtnDivID" draggable="false">
+      <a draggable="false" class="btn" id="goBtnID" onclick="goBtnFunction();">Go</a>
     </div>
     <div id="totalPagesDivID">
       Total Pages: 1
@@ -184,7 +183,7 @@
     
     <div id="settingsDialog" class="modalDialogs">
       <div>
-        <a id="SDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="settings dialog close button"></a>
+        <a draggable="false" id="SDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="settings dialog close button"></a>
         <h2>Settings:</h2>
         <div class="modalBoxContent">
           <p>Note: These settings will only remain in effect until you close or refresh the app. Unfortunately, that means you will probably need to re-adjust them to your liking every time you refresh or re-start the app. Portability comes with its costs.</p>
@@ -206,15 +205,15 @@
             </li>
             <li>Undo History: <input type="number" id="SDUndoHistoryBox" oninput="SDInputValidation();" onkeydown="SDCheckForEnter(event);" value="30" min="10" max="100"> items. Min: 10, Max: 100<br></li>
             <li>Max Pages Allowed: <input type="number" id="SDMaxPagesAllowedBox" oninput="SDInputValidation();" onkeydown="SDCheckForEnter(event);" value="250" min="200" max="999"> Min: 200, Max: 999<br></li>
-            <li><input id="SDEnableKeyboardShortcuts" type="checkbox" value="false"> Enable the keyboard shortcuts shown below. (Some of these are case-sensitive) <br> (ctrl+z --> Undo, <br> ctrl+y --> Redo, <br> ctrl+c --> Copy section, <br> ctrl+v --> Paste, <br> ctrl+a --> Select all, <br> ctrl+Shift+a --> Deselect all, <br> p --> Pen, <br> e --> Eraser, <br> l --> Straight Line, <br> s --> Select, <br> i --> Identifier, <br> d --> Dot, <br> b --> Blue, <br> k --> Black, <br> r --> Red, <br> g --> Green, <br> w --> White, <br> Space --> Next Page, <br> Shift+Space --> Previous Page, <br> esc --> Cancel draw/select/paste/etc, <br> Delete --> Erase selection.)</li>
-            <li><input id="SDUseWidscreenTemplates" type="checkbox" value="false"> Optimize for wide-screen use where possible.</li>
-            <li><input id="SDUseColorInvertedTemplates" type="checkbox" value="false"> Use color inverted templates where possible. (This is useful if you prefer a black background.)</li>
+            <li><input draggable="false" id="SDEnableKeyboardShortcuts" type="checkbox" value="false"> Enable the keyboard shortcuts shown below. (Some of these are case-sensitive) <br> (ctrl+z --> Undo, <br> ctrl+y --> Redo, <br> ctrl+c --> Copy section, <br> ctrl+v --> Paste, <br> ctrl+a --> Select all, <br> ctrl+Shift+a --> Deselect all, <br> p --> Pen, <br> e --> Eraser, <br> l --> Straight Line, <br> s --> Select, <br> i --> Identifier, <br> d --> Dot, <br> b --> Blue, <br> k --> Black, <br> r --> Red, <br> g --> Green, <br> w --> White, <br> Space --> Next Page, <br> Shift+Space --> Previous Page, <br> esc --> Cancel draw/select/paste/etc, <br> Delete --> Erase selection.)</li>
+            <li><input draggable="false" id="SDUseWidscreenTemplates" type="checkbox" value="false"> Optimize for wide-screen use where possible.</li>
+            <li><input draggable="false" id="SDUseColorInvertedTemplates" type="checkbox" value="false"> Use color inverted templates where possible. (This is useful if you prefer a black background.)</li>
             
             
           </ul>
           
         </div>
-        <a id="SDSaveBtn" onclick="SDOkBtnFunction();" title="" class="modalBoxOkBtns">Save</a>
+        <a draggable="false" id="SDSaveBtn" onclick="SDOkBtnFunction();" title="" class="modalBoxOkBtns">Save</a>
       </div>
     </div>
     
@@ -223,7 +222,7 @@
     
     <div id="openImagesDialog" class="modalDialogs">
       <div>
-        <a id="OIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="open images dialog close button"></a>
+        <a draggable="false" id="OIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="open images dialog close button"></a>
         <h2 id="OIDHeader">Open Images</h2>
         <div class="modalBoxContent">
           
@@ -250,9 +249,9 @@
           </ol>
           
         </div>
-        <input id="OIDChooseFilesBtn" type="file" onchange="OIDFilesSelectedFunction();" accept="image/png" multiple>
-        <input id="OIDIgnoreThumbnailsCheckbox" type="checkbox" checked>
-        <p id="OIDIgnoreThumbnailsCheckboxLabel">Ignore files that start with "thumb"</p>
+        <input draggable="false" id="OIDChooseFilesBtn" type="file" onchange="OIDFilesSelectedFunction();" accept="image/png" multiple>
+        <input draggable="false" id="OIDIgnoreThumbnailsCheckbox" type="checkbox" checked>
+        <p draggable="false" id="OIDIgnoreThumbnailsCheckboxLabel">Ignore files that start with "thumb"</p>
       </div>
     </div>
     
@@ -260,7 +259,7 @@
     
     <div id="saveImagesDialog" class="modalDialogs">
       <div>
-        <a id="SIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="save images dialog close button"></a>
+        <a draggable="false" id="SIDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="save images dialog close button"></a>
         <h2 id="SIDHeader">Save Images</h2>
         <div class="modalBoxContent">
           
@@ -274,9 +273,9 @@
           </ol>
           
         </div>
-        Name for File(s): <input oninput="SIDFileNamesInputTextboxValidator();" type="text" id="SIDFileNamesTextBox" value="Page" autofocus>x.png &nbsp;&nbsp;(x = Page Number)
-        <a class="extraBottomButtons" onclick="SIDChooseFolderBtnFunction();" id="SIDChooseFolderBtn">Choose Folder</a>
-        <a class="extraBottomButtons" onclick="SIDActuallySavePagesBtnFunction();" id="SIDActuallySavePagesBtn">Save Images To Chosen Folder</a>
+        Name for File(s): <input draggable="false" oninput="SIDFileNamesInputTextboxValidator();" type="text" id="SIDFileNamesTextBox" value="Page" autofocus>x.png &nbsp;&nbsp;(x = Page Number)
+        <a draggable="false" class="extraBottomButtons" onclick="SIDChooseFolderBtnFunction();" id="SIDChooseFolderBtn">Choose Folder</a>
+        <a draggable="false" class="extraBottomButtons" onclick="SIDActuallySavePagesBtnFunction();" id="SIDActuallySavePagesBtn">Save Images To Chosen Folder</a>
       </div>
     </div>
     
@@ -284,7 +283,7 @@
     
     <div id="helpDialog" class="modalDialogs">
       <div>
-        <a id="HDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="help dialog close button"></a>
+        <a draggable="false" id="HDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="help dialog close button"></a>
         <h2>Here are some help topics:</h2>
         <div class="modalBoxContent">
           
@@ -426,7 +425,7 @@ only cover the most common ones.
 Last updated: Aug 9, 2016.
           </textarea>
           <br>
-          <a class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboardFromPageElement('HDInstructionsTextArea');">Copy Instructions To Clipboard</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboardFromPageElement('HDInstructionsTextArea');">Copy Instructions To Clipboard</a>
           
           <p>For more help see the "Features List," "FAQ," "News," and "Other Pages" sections of our website <a class="webLikeLinks" href="http://www.rogersmathwhiteboard.com" target="_blank" >rogersmathwhiteboard.com</a>
           </p>
@@ -439,7 +438,7 @@ Last updated: Aug 9, 2016.
     
     <div id="aboutDialog" class="modalDialogs">
       <div>
-        <a id="openModalTestCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="about dialog close button"></a>
+        <a draggable="false" id="openModalTestCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="about dialog close button"></a>
         <img id="ADMainIcon" src="images/icons/scribble-128.png" alt="Rogers Math Whiteboard Icon">
         <h2 id="ADTitle">About Roger's Math Whiteboard Version 3.14159265358979</h2>
         <div id="ADContentArea" class="modalBoxContent">
@@ -829,7 +828,7 @@ Public License instead of this License.
 
           </textarea>
           <br>
-          <a class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboardFromPageElement('ADLicenceTextArea');">Copy License To Clipboard</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="copyTextToUsersClipboardFromPageElement('ADLicenceTextArea');">Copy License To Clipboard</a>
           
         </div>
       </div>
@@ -839,14 +838,14 @@ Public License instead of this License.
     
     <div id="fileOtherDialog" class="modalDialogs">
       <div>
-        <a id="FODCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="file other dialog close button"></a>
+        <a draggable="false" id="FODCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="file other dialog close button"></a>
         <h2>Other Options/Tools:</h2>
         <div class="modalBoxContent">
           
-          <a class="modalBoxKeypadBtns" onclick="FODDuplicatePage();" ontouchstart="(function(e){e.preventDefault();})(event); FODDuplicatePage();">Duplicate page</a><br>
-          <a class="modalBoxKeypadBtns" onclick="FODMakeCurrentDrawingPermanent();" ontouchstart="(function(e){e.preventDefault();})(event); FODMakeCurrentDrawingPermanent();">Make current drawing permanent</a><br>
-          <a class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('clockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('clockwise');">Rotate page clockwise</a><br>
-          <a class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('counterclockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('counterclockwise');">Rotate page counterclockwise</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="FODDuplicatePage();" ontouchstart="(function(e){e.preventDefault();})(event); FODDuplicatePage();">Duplicate page</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="FODMakeCurrentDrawingPermanent();" ontouchstart="(function(e){e.preventDefault();})(event); FODMakeCurrentDrawingPermanent();">Make current drawing permanent</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('clockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('clockwise');">Rotate page clockwise</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('counterclockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('counterclockwise');">Rotate page counterclockwise</a><br>
           <p> </p>
           
         </div>
@@ -857,102 +856,102 @@ Public License instead of this License.
     
     <div id="insertTextDialog" class="modalDialogs">
       <div>
-        <a id="ITDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="insert text dialog close button"></a>
+        <a draggable="false" id="ITDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="insert text dialog close button"></a>
         <h2>Insert Text:</h2>
         <div class="modalBoxContent">
           <!--All of these are the buttons that insert various symbols into the text box when clicked:-->
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">+</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">-</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8226;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&times;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&divide;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter('<');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter('<');">&lt;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter('>');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter('>');">&gt;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8804;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8805;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">=</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8800;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#177;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">|</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8730;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8731;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8732;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">U</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8745;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8734;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#960;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8776;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">i</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">e</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#916;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#931;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8747;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#945;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#946;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#947;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8736;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#952;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#956;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#963;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8709;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8712;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8737;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8451;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8457;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#176;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8970;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8971;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">^</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8968;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8969;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">(</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">)</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">[</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">]</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">{</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">}</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#178;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#179;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">:</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">;</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">!</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">$</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">%</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">*</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">/</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">,</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">'</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">~</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">_</a><br>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">1</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">2</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">3</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">4</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">5</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">6</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">7</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">8</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">9</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">0</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">.</a><br>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">a</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">b</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">c</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">h</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">l</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">m</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">t</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">x</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">y</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">z</a>
-          <a class="modalBoxKeypadBtns" onclick="ITDAddCharacter(' ');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(' ');">Space</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">+</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">-</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8226;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&times;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&divide;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter('<');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter('<');">&lt;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter('>');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter('>');">&gt;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8804;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8805;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">=</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8800;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#177;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">|</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8730;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8731;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8732;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">U</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8745;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8734;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#960;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8776;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">i</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">e</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#916;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#931;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8747;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#945;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#946;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#947;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8736;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#952;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#956;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#963;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8709;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8712;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8737;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8451;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8457;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#176;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8970;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8971;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">^</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8968;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#8969;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">(</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">)</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">[</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">]</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">{</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">}</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#178;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">&#179;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">:</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">;</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">!</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">$</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">%</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">*</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">/</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">,</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">'</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">~</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">_</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">1</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">2</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">3</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">4</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">5</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">6</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">7</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">8</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">9</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">0</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">.</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">a</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">b</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">c</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">h</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">l</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">m</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">t</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">x</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">y</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(this.innerHTML);">z</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="ITDAddCharacter(' ');" ontouchstart="(function(e){e.preventDefault();})(event); ITDAddCharacter(' ');">Space</a>
           
         </div>
         <p id="ITDTextLabel">Text:</p>
-        <input type="text" oninput="ITDValidationFunction();" onkeydown="ITDCheckForEnter(event);" id="ITDTextBox" size="20" autofocus>
-        <a class="extraBottomButtons" onclick="ITDBackspace();" ontouchstart="(function(e){e.preventDefault();})(event); ITDBackspace();" id="ITDBackspaceBtn">Backspace</a>
-        <a class="extraBottomButtons" onclick="ITDClear();" ontouchstart="(function(e){e.preventDefault();})(event); ITDClear();" id="ITDClearBtn">Clear</a><br>
-        <a onclick="ITDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
+        <input draggable="false" type="text" oninput="ITDValidationFunction();" onkeydown="ITDCheckForEnter(event);" id="ITDTextBox" size="20" autofocus>
+        <a draggable="false" class="extraBottomButtons" onclick="ITDBackspace();" ontouchstart="(function(e){e.preventDefault();})(event); ITDBackspace();" id="ITDBackspaceBtn">Backspace</a>
+        <a draggable="false" class="extraBottomButtons" onclick="ITDClear();" ontouchstart="(function(e){e.preventDefault();})(event); ITDClear();" id="ITDClearBtn">Clear</a><br>
+        <a draggable="false" onclick="ITDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
       </div>
     </div>
     
@@ -960,15 +959,15 @@ Public License instead of this License.
     
     <div id="otherToolDialog" class="modalDialogs">
       <div>
-        <a id="OTDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="other tool dialog close button"></a>
+        <a draggable="false" id="OTDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other tool dialog close button"></a>
         <h2>Other Tools:</h2>
         <div class="modalBoxContent">
           
-          <a class="modalBoxKeypadBtns" onclick="tool = 'central-line'; updateTextOfToolBtn(); OTDCloseDialog();">Central line</a><br>
-          <a class="modalBoxKeypadBtns" onclick="tool = 'dashed-line'; updateTextOfToolBtn(); OTDCloseDialog();">Dashed line</a><br>
-          <a class="modalBoxKeypadBtns" onclick="tool = 'dashed-central-line'; updateTextOfToolBtn(); OTDCloseDialog();">Dashed Central line</a><br>
-          <a class="modalBoxKeypadBtns" onclick="pasteAndResizeToolFunction();">Paste and resize to:</a><br>
-          <input type="number" min="10" max="400" value="90" id="OTDPercentInput" oninput="OTDCheckPercentInput();"/>%  (Min: 10%  Max: 400%)<br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="tool = 'central-line'; updateTextOfToolBtn(); OTDCloseDialog();">Central line</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="tool = 'dashed-line'; updateTextOfToolBtn(); OTDCloseDialog();">Dashed line</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="tool = 'dashed-central-line'; updateTextOfToolBtn(); OTDCloseDialog();">Dashed Central line</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="pasteAndResizeToolFunction();">Paste and resize to:</a><br>
+          <input draggable="false" type="number" min="10" max="400" value="90" id="OTDPercentInput" oninput="OTDCheckPercentInput();"/>%  (Min: 10%  Max: 400%)<br>
           <p> </p>
           
         </div>
@@ -979,17 +978,17 @@ Public License instead of this License.
     
     <div id="otherColorDialog" class="modalDialogs">
       <div>
-        <a id="OCDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="other color dialog close button"></a>
+        <a draggable="false" id="OCDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other color dialog close button"></a>
         <h2>Pick a Color:</h2>
         <div class="modalBoxContent">
           
           <canvas id="OCDPickerCanvas" onmousedown="OCDMouseDown(event)" ontouchstart="OCDTouchStart(event);" width="350" height="700"></canvas>
           <div>
             <div id="OCDColorValuesInputDiv">
-              Red:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDRedTextBox" min="0" max="255"><br>
-              Green:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDGreenTextBox" min="0" max="255"><br>
-              Blue:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDBlueTextBox" min="0" max="255"><br>
-              Transparency: <input type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDTransparencyTextBox" min="0" max="100">%<br>
+              Red:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input draggable="false" type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDRedTextBox" min="0" max="255"><br>
+              Green:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input draggable="false" type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDGreenTextBox" min="0" max="255"><br>
+              Blue:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input draggable="false" type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDBlueTextBox" min="0" max="255"><br>
+              Transparency: <input draggable="false" type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDTransparencyTextBox" min="0" max="100">%<br>
               <p id="OCDSmallerLabel"> 0% = Not transparent. 95% to 99% works well for highlighting.
               </p>
             </div>
@@ -998,7 +997,7 @@ Public License instead of this License.
         </div>
         <p id="OCDColorChosenLabel">Color Chosen:</p>
         <canvas id="OCDColorChosenExampleCanvas" width="200" height="40"></canvas>
-        <a onclick="OCDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
+        <a draggable="false" onclick="OCDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
       </div>
     </div>
     
@@ -1006,26 +1005,26 @@ Public License instead of this License.
     
     <div id="otherSizeDialog" class="modalDialogs">
       <div>
-        <a id="OSDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="other size dialog close button"></a>
+        <a draggable="false" id="OSDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="other size dialog close button"></a>
         <h2>New Size:</h2>
         <div class="modalBoxContent">
-          <input type="number"  oninput="OSDValidateInput();" onkeydown="OSDCheckForEnter(event);" id="OSDSizeTextBox" min="2" max="2000">
+          <input draggable="false" type="number"  oninput="OSDValidateInput();" onkeydown="OSDCheckForEnter(event);" id="OSDSizeTextBox" min="2" max="2000">
           <p>Min: 2, Max: 2000. Medium = 5</p>
           <!--These are just the buttons on the dialog. I put these here so that they don't need to use their keyboard.-->
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">1</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">2</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">3</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">4</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">5</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">6</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">7</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">8</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">9</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">0</a><br>
-          <a class="modalBoxKeypadBtns" onclick="OSDBackspace();" ontouchstart="(function(e){e.preventDefault();})(event); OSDBackspace();">Backspace</a>
-          <a class="modalBoxKeypadBtns" onclick="OSDClear();" ontouchstart="(function(e){e.preventDefault();})(event); OSDClear();">Clear</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">1</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">2</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">3</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">4</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">5</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">6</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">7</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">8</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">9</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDAddCharacter(this.innerHTML);" ontouchstart="(function(e){e.preventDefault();})(event); OSDAddCharacter(this.innerHTML);">0</a><br>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDBackspace();" ontouchstart="(function(e){e.preventDefault();})(event); OSDBackspace();">Backspace</a>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="OSDClear();" ontouchstart="(function(e){e.preventDefault();})(event); OSDClear();">Clear</a><br>
         </div>
-        <a onclick="OSDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
+        <a draggable="false" onclick="OSDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
       </div>
     </div>
     
@@ -1033,7 +1032,7 @@ Public License instead of this License.
     
     <div id="insertScreenshotDialog" class="modalDialogs">
       <div id="ISDMainDiv">
-        <a id="ISDCloseBtn" href="#close" onclick="ISDCleanupFunction();" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="insert screenshot dialog close button"></a>
+        <a draggable="false" id="ISDCloseBtn" href="#close" onclick="ISDCleanupFunction();" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="insert screenshot dialog close button"></a>
         <h2>Insert Screenshot</h2>
         <div id="ISDMainContentDiv" class="modalBoxContent">
           <!--Here is where the content of the modal box will go. Note that this is a case where the canvas that allows
@@ -1046,7 +1045,7 @@ Public License instead of this License.
           </div>
           
         </div>
-        <a onclick="ISDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
+        <a  draggable="false" onclick="ISDOkBtnFunction();" title="" class="modalBoxOkBtns">OK</a>
       </div>
     </div>
     
@@ -1054,98 +1053,97 @@ Public License instead of this License.
     
     <div id="otherPageDialog" class="modalDialogs">
       <div>
-        <a id="OPDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img src="images/icons/transparent.png" alt="insert other page dialog close button"></a>
+        <a draggable="false" id="OPDCloseBtn" href="#close" title="Close" class="modalDialogsCloseBtns"><img draggable="false" src="images/icons/transparent.png" alt="insert other page dialog close button"></a>
         <h2>Click/Tap on the template that you would like to insert/use:</h2>
-        <div class="modalBoxContent">
+        <div class="modalBoxContent" id="OPDContentDiv">
           
           <!--These are all of the templates/options that can be inserted/used. The uppermost ones call functions as
           opposed to inserting the applicable template.-->
-          <!--<a onclick="OPDInsertPageFromImage();"><img class="OPDImages" src="images/other_templates/From_Image.png" alt="Insert Page Using an Image button"></a>-->
-          <label for="OPDImage-input" class="modalBoxKeypadBtns">Insert Page Using Image</label>
+          <label draggable="false" for="OPDImage-input" class="modalBoxKeypadBtns">Insert Page Using Image</label>
           <input type="file" onchange="OPDInsertPageFromImage(this); this.value = null;" id="OPDImage-input" accept="image/jpeg, image/png, image/jpg" style="display: none;">
           <p>↑ Insert Page Using an Image</p>
-          <a onclick="OPDInsertColoredPage();"><img class="OPDImages" src="images/other_templates/Colored_Page.png" alt="Insert colored page button"></a>
+          <a draggable="false" onclick="OPDInsertColoredPage();"><img draggable="false" class="OPDImages" src="images/other_templates/Colored_Page.png" alt="Insert colored page button"></a>
           <p>↑ Colored Page</p>
           <!--From here on down, clicking a particular image will simply insert the applicable template.-->
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Graph_Paper_Page_Smaller_Squares.png" alt="Graph Paper Smaller Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Graph_Paper_Page_Smaller_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Graph_Paper_Page_Smaller_Squares.png" alt="Graph Paper Smaller Squares button"></a>
           <p>↑ Graph Paper Smaller Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Graph_Paper_Page_Larger_Squares.png" alt="Graph Paper Larger Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Graph_Paper_Page_Larger_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Graph_Paper_Page_Larger_Squares.png" alt="Graph Paper Larger Squares button"></a>
           <p>↑ Graph Paper Larger Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Paper_Page_Smaller_Squares.png" alt="Coordinate Smaller Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Paper_Page_Smaller_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Paper_Page_Smaller_Squares.png" alt="Coordinate Smaller Squares button"></a>
           <p>↑ Coordinate Smaller Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Paper_Page_Larger_Squares.png" alt="Coordinate Larger Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Paper_Page_Larger_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Paper_Page_Larger_Squares.png" alt="Coordinate Larger Squares button"></a>
           <p>↑ Coordinate Larger Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_Only.png" alt="Coordinate Axes Only button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Page_Axes_Only.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_Only.png" alt="Coordinate Axes Only button"></a>
           <p>↑ Coordinate Axes Only</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks.png" alt="Coordinate Axes And Tickmarks button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Page_Axes_And_Tickmarks.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks.png" alt="Coordinate Axes And Tickmarks button"></a>
           <p>↑ Coordinate Axes And Tickmarks</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Closer_Together.png" alt="Coordinate Axes And Tickmarks Closer Together button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Closer_Together.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Closer_Together.png" alt="Coordinate Axes And Tickmarks Closer Together button"></a>
           <p>↑ Coordinate Axes And Tickmarks Closer Together</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Further_Apart.png" alt="Coordinate Axes And Tickmarks Further Apart button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Further_Apart.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_X_Y_Graph_Page_Axes_And_Tickmarks_Further_Apart.png" alt="Coordinate Axes And Tickmarks Further Apart button"></a>
           <p>↑ Coordinate Axes And Tickmarks Further Apart</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page.png" alt="Stats Graph button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page.png" alt="Stats Graph button"></a>
           <p>↑ Stats Graph</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Smaller_Squares.png" alt="Stats Graph Smaller Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Smaller_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Smaller_Squares.png" alt="Stats Graph Smaller Squares button"></a>
           <p>↑ Stats Graph Smaller Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Larger_Squares.png" alt="Stats Graph Larger Squares button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Larger_Squares.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Larger_Squares.png" alt="Stats Graph Larger Squares button"></a>
           <p>↑ Stats Graph Larger Squares</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Axes_Only.png" alt="Stats Graph Axes Only button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Axes_Only.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Axes_Only.png" alt="Stats Graph Axes Only button"></a>
           <p>↑ Stats Graph Axes Only</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Only.png" alt="Stats Graph Axes And Tickmarks button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Tick_Marks_Only.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Only.png" alt="Stats Graph Axes And Tickmarks button"></a>
           <p>↑ Stats Graph Axes And Tickmarks</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Closer_Together.png" alt="Stats Graph Axes And Tickmarks Closer Together button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Tick_Marks_Closer_Together.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Closer_Together.png" alt="Stats Graph Axes And Tickmarks Closer Together button"></a>
           <p>↑ Stats Graph Axes And Tickmarks Closer Together</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Further_Apart.png" alt="Stats Graph Axes And Tickmarks Further Apart button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Stats_Graph_Page_Tick_Marks_Further_Apart.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Stats_Graph_Page_Tick_Marks_Further_Apart.png" alt="Stats Graph Axes And Tickmarks Further Apart button"></a>
           <p>↑ Stats Graph Axes And Tickmarks Further Apart</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Partial_Page_X_Y_Graph_Page.png" alt="Partial Page Coordinate button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Partial_Page_X_Y_Graph_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Partial_Page_X_Y_Graph_Page.png" alt="Partial Page Coordinate button"></a>
           <p>↑ Partial Page Coordinate</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Partial_Page_Graph_Paper_Page.png" alt="Partial Page Graph Paper button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Partial_Page_Graph_Paper_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Partial_Page_Graph_Paper_Page.png" alt="Partial Page Graph Paper button"></a>
           <p>↑ Partial Page Graph Paper</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/DRT_Problem_Template_Page.png" alt="DRT Problem Template button"></a>
+          <a draggable="false" onclick="OPDInsertPage('DRT_Problem_Template_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/DRT_Problem_Template_Page.png" alt="DRT Problem Template button"></a>
           <p>↑ DRT Problem Template</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Synthetic_Division_Template_Page.png" alt="Synthetic Division Template button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Synthetic_Division_Template_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Synthetic_Division_Template_Page.png" alt="Synthetic Division Template button"></a>
           <p>↑ Synthetic Division Template</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Unit_Circle_No_Values.png" alt="Unit Circle No Values button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Unit_Circle_No_Values.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Unit_Circle_No_Values.png" alt="Unit Circle No Values button"></a>
           <p>↑ Unit Circle No Values</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Unit_Circle_With_Values.png" alt="Unit Circle With Values button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Unit_Circle_With_Values.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Unit_Circle_With_Values.png" alt="Unit Circle With Values button"></a>
           <p>↑ Unit Circle With Values</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Cube_Page.png" alt="Cube button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Cube_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Cube_Page.png" alt="Cube button"></a>
           <p>↑ Cube</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Cuboid_Page.png" alt="Cuboid button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Cuboid_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Cuboid_Page.png" alt="Cuboid button"></a>
           <p>↑ Cuboid</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Upright_Cylinder_Page.png" alt="Upright Cylinder button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Upright_Cylinder_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Upright_Cylinder_Page.png" alt="Upright Cylinder button"></a>
           <p>↑ Upright Cylinder</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Sideways_Cylinder_Page.png" alt="Sideways Cylinder button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Sideways_Cylinder_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Sideways_Cylinder_Page.png" alt="Sideways Cylinder button"></a>
           <p>↑ Sideways Cylinder</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_2_Sets_Disjoint_Filled_in_Page.png" alt="Venn 2 Sets Disjoint Filled in button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_2_Sets_Disjoint_Filled_in_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_2_Sets_Disjoint_Filled_in_Page.png" alt="Venn 2 Sets Disjoint Filled in button"></a>
           <p>↑ Venn 2 Sets Disjoint Filled in</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_2_Sets_Joined_filled_in_Page.png" alt="Venn 2 Sets Joined Filled in button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_2_Sets_Joined_filled_in_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_2_Sets_Joined_filled_in_Page.png" alt="Venn 2 Sets Joined Filled in button"></a>
           <p>↑ Venn 2 Sets Joined Filled in</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_3_Sets_Joined_filled_in_Page.png" alt="Venn 3 Sets Joined Filled in button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_3_Sets_Joined_filled_in_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_3_Sets_Joined_filled_in_Page.png" alt="Venn 3 Sets Joined Filled in button"></a>
           <p>↑ Venn 3 Sets Joined Filled in</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_2_Sets_Disjoint_Page.png" alt="Venn 2 Sets Disjoint button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_2_Sets_Disjoint_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_2_Sets_Disjoint_Page.png" alt="Venn 2 Sets Disjoint button"></a>
           <p>↑ Venn 2 Sets Disjoint</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_2_Sets_Joined_Page.png" alt="Venn 2 Sets Joined button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_2_Sets_Joined_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_2_Sets_Joined_Page.png" alt="Venn 2 Sets Joined button"></a>
           <p>↑ Venn 2 Sets Joined</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Ven_3_Sets_Joined_Page.png" alt="Venn 3 Sets Joined button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Ven_3_Sets_Joined_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Ven_3_Sets_Joined_Page.png" alt="Venn 3 Sets Joined button"></a>
           <p>↑ Venn 3 Sets Joined</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Blank_Circle_Page.png" alt="Circle button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Blank_Circle_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Blank_Circle_Page.png" alt="Circle button"></a>
           <p>↑ Circle</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Equalateral_Triangle_Page.png" alt="Equilateral Triangle button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Equalateral_Triangle_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Equalateral_Triangle_Page.png" alt="Equilateral Triangle button"></a>
           <p>↑ Equilateral Triangle</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/45_45_90_Right_Triangle_Page.png" alt="45 45 90 Right Triangle button"></a>
+          <a draggable="false" onclick="OPDInsertPage('45_45_90_Right_Triangle_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/45_45_90_Right_Triangle_Page.png" alt="45 45 90 Right Triangle button"></a>
           <p>↑ 45 45 90 Right Triangle</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/30_60_90_Right_Triangle_Upright_Page.png" alt="30 60 90 Right Triangle Upright button"></a>
+          <a draggable="false" onclick="OPDInsertPage('30_60_90_Right_Triangle_Upright_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/30_60_90_Right_Triangle_Upright_Page.png" alt="30 60 90 Right Triangle Upright button"></a>
           <p>↑ 30 60 90 Right Triangle Upright</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/30_60_90_Right_Triangle_Sideways_Page.png" alt="30 60 90 Right Triangle Upright button"></a>
+          <a draggable="false" onclick="OPDInsertPage('30_60_90_Right_Triangle_Sideways_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/30_60_90_Right_Triangle_Sideways_Page.png" alt="30 60 90 Right Triangle Upright button"></a>
           <p>↑ 30 60 90 Right Triangle Sideways</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Dimond_Page.png" alt="Diamond button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Dimond_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Dimond_Page.png" alt="Diamond button"></a>
           <p>↑ Diamond</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Parallelogram_Page.png" alt="Parallelogram button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Parallelogram_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Parallelogram_Page.png" alt="Parallelogram button"></a>
           <p>↑ Parallelogram</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Rhombus_Page.png" alt="Rhombus button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Rhombus_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Rhombus_Page.png" alt="Rhombus button"></a>
           <p>↑ Rhombus</p>
-          <a onclick="OPDInsertPage(event);"><img class="OPDImages" src="images/other_templates/Lined_Page.png" alt="Lined Page button"></a>
+          <a draggable="false" onclick="OPDInsertPage('Lined_Page.png');"><img draggable="false" class="OPDImages" src="images/other_templates/Lined_Page.png" alt="Lined Page button"></a>
           <p>↑ Lined Page</p>
           
           
