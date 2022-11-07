@@ -4612,3 +4612,8 @@ echo -e $relatedCode >> outputb64code.txt
  *  
  */
 
+
+// Since this file is now loaded we can do two things to get rid of the unnecessary error messages:
+OPDReadyOtherPageDialog();
+console.clear();
+console.log('Previous error messages were almost certainly irrelevent and can be ignored.');
