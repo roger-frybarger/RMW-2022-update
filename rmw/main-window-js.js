@@ -2441,7 +2441,6 @@ var SIDValidCharsString = 'abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ
 var SIDFilesToHandle;
 var SIDFilesHandled;
 var SIDErrorsSavingFiles = false;
-var SIDSaveViaCtrlS = false;
 var SIDNumFilesInFolder = 0;
 
 // This function simply sets up the save images dialog:
@@ -2450,6 +2449,7 @@ function SIDReadySaveImagesDialog(){ // eslint-disable-line no-unused-vars
   document.getElementById('SIDHeader').innerHTML = 'Save Images';
   pathOfFolderToSaveInto = '';
   SIDNameForFiles = '';
+  SIDErrorsSavingFiles = false;
 }
 
 // Validation for the file name text box.
@@ -2499,6 +2499,7 @@ async function SIDChooseFolderBtnFunction(){
 		return;
 	}
 	try {
+		document.getElementById('SIDHeader').innerHTML = 'Waiting for Empty Folder & Permission to view files...';
         pathOfFolderToSaveInto = await window.showDirectoryPicker({
             startIn: 'desktop'
         });
@@ -2512,6 +2513,7 @@ async function SIDChooseFolderBtnFunction(){
 			SIDWarnAboutEmptyFolder();
 			return;
 		}
+		document.getElementById('SIDHeader').innerHTML = 'Click/tap "Save Images To Chosen Folder" to continue.';
         
     } catch(e) {
         //console.log(e);
@@ -2536,22 +2538,25 @@ async function SIDActuallySavePagesBtnFunction(){
 		return;
 	}
 	
-	// Now to actually save all the images as files...       *** *** ***
+	// Now to actually save all the images as files...
 	SIDNameForFiles = document.getElementById('SIDFileNamesTextBox').value;
 	// We need: 1. Name, 2. fileHandle, 3. contents
 	
 	SIDFilesToHandle = arrayOfCurrentImages.length;
 	SIDFilesHandled = 0;
-	document.getElementById('SIDHeader').innerHTML = 'Waiting For Permission...';
+	document.getElementById('SIDHeader').innerHTML = 'Waiting For Permission to Save Changes...';
 	for(var i = 0; i < SIDFilesToHandle; ++i){
 		if(SIDErrorsSavingFiles){break;}
 		
 		var name = "" + SIDNameForFiles + (i + 1) + '.png';
 		var fileHandle = await pathOfFolderToSaveInto.getFileHandle(name, { create: true }).catch((error) => {SIDErrorMessage();});
+		// For testing:
+		//await new Promise(r => setTimeout(r, 3000));
 		
 		var b64str = arrayOfCurrentImages[i].src;
 		b64str = b64str.substring(22, b64str.length); // stripping off the junk at the beginning
 		
+		if(SIDErrorsSavingFiles){break;}
 		SIDWriteFile(fileHandle, SIDBase64toBlob(b64str));
 		document.getElementById('SIDHeader').innerHTML = 'Saved Page ' + (i + 1) + "....";
 	}
@@ -2559,7 +2564,7 @@ async function SIDActuallySavePagesBtnFunction(){
 
 function SIDErrorMessage(){
 	SIDErrorsSavingFiles = true;
-	alert('Errors occured while trying to save files into the folder you selected. Please try again. Make sure that you have permission to save files to the folder that you select.');
+	alert("***Error:***\nOne or more errors occured while trying to save files into the folder you selected. Please try again. Make sure that you have permission to save files to the folder that you select.");
 	safeToClose = false;
 	  pathOfFolderToSaveInto = '';
 	  SIDNumFilesInFolder = 0;
@@ -2568,20 +2573,26 @@ function SIDErrorMessage(){
 }
 
 function SIDWarnAboutEmptyFolder(){
-	alert("Error:\nThe folder you chose seems to have other files and/or folders in it. This program can only save images into an empty folder. You will need to choose a different folder that is empty. Here are a few options regarding how to proceed: \n\n1. Manually delete everything in that folder and then select it again via this window.\n2. Select a different folder that is currently empty.\n3. Create a new  empty sub-folder within that folder and select that.\n\nRegardless of how you choose to proceed the folder you select must be empty in order to be able to save the images into it.");
+	alert("***Error:***\nThe folder you chose seems to have other files and/or folders in it. This program can only save images into an empty folder. Please either:\n\n1. Manually delete everything in that folder and select it again via this window or:\n2. Create/select a different empty folder to use for the images.");
 }
 
 
 async function SIDWriteFile(fileHandle, contents) {
   if(SIDErrorsSavingFiles){return;}
   // Create a FileSystemWritableFileStream to write to.
-  const writable = await fileHandle.createWritable();
+  const writable = await fileHandle.createWritable().catch((error) => {SIDErrorMessage();});
 
   // Write the contents of the file to the stream.
-  await writable.write(contents);
+  try{
+     await writable.write(contents).catch((error) => {SIDErrorMessage();});
+  }catch(err){SIDErrorMessage(); return;}
 
   // Close the file and write the contents to disk.
-  await writable.close();
+  if(SIDErrorsSavingFiles){return;}
+  try{
+    await writable.close().catch((error) => {SIDErrorMessage();});
+  }catch(err){SIDErrorMessage(); return;}
+  if(SIDErrorsSavingFiles){return;}
   SIDFilesHandled++;
   if(SIDFilesHandled == SIDFilesToHandle){
 	  alert('Images saved to folder.');
@@ -2631,7 +2642,6 @@ function ADReadyAboutDialog(){ // eslint-disable-line no-unused-vars
 
 // ********Here is the code for the fileOtherDialog:********
 
-var FODPercentValid = true;
 var FODImagesToLoad;
 var FODImagesLoaded;
 var FODImgForInsertion1;
@@ -2726,43 +2736,7 @@ function FODContinueRotateDrawingSurfaceClockwise(){
   }
 }
 
-// This function allows the user to import an image from their clipboard:
-function FODImportFromSystem(scle){ // eslint-disable-line no-unused-vars
-  
-  alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');
-  return;
-}
 
-// This is the function that actually gets called by the import image from clipboard & resize button
-// It then calls the function above which actually does the work:
-function FODImportFromSystemResize(){ // eslint-disable-line no-unused-vars
-  
-  alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');
-  return;
-}
-
-// Here is the input validation function for the scale percent input
-function FODCheckPercentInput(){ // eslint-disable-line no-unused-vars
-  var elm = document.getElementById('FODPercentInput');
-  var incomming = elm.value;
-  incomming = parseInt(incomming, 10);
-  if(isNaN(incomming) || incomming > 400 || incomming < 10){
-    elm.style.backgroundColor = 'red';
-    FODPercentValid = false;
-  }
-  else{
-    elm.style.backgroundColor = 'white';
-    FODPercentValid = true;
-  }
-}
-
-// Here is the function that allows the user to export an image on the program's clipboard to
-// their system's clipboard.
-function FODExportCopiedSection(){ // eslint-disable-line no-unused-vars
-  
-  alert('Unfortunately, this functionality is only available in the full version at the moment. You can download the full version for free from rogersmathwhiteboard.com.');
-  return;
-}
 
 // ********Here is the code for the insertTextDialog:********
 var ITDValid = true;
@@ -3200,6 +3174,7 @@ function ISDReadyInsertScreenshotDialog(){ // eslint-disable-line no-unused-vars
 	document.getElementById('ISDContentDiv').appendChild(btn);
 }
 
+// This function starts the screenshot process and pops up the window:
 async function ISDStartScreenshotProcess(){
 	ISDTheyAborted = false;
 	ISDVideoElem.srcObject = null;
@@ -3210,6 +3185,7 @@ async function ISDStartScreenshotProcess(){
 	
 }
 
+// This function stops the capture once we have gotten what we need from it.
 function ISDStopCapture() {
 	if(ISDTheyAborted){return;}
 	let tracks = ISDVideoElem.srcObject.getTracks();
@@ -3217,6 +3193,7 @@ function ISDStopCapture() {
 	ISDVideoElem.srcObject = null;
 }
 
+// This function obtains the base64 string from the video:
 function ISDGetScreenshotInBase64() {
   if(ISDTheyAborted){return;}
   let canvas = document.createElement('canvas');
@@ -3229,6 +3206,8 @@ function ISDGetScreenshotInBase64() {
   ISDScreenShotORIGINAL = canvas.toDataURL();
 }
 
+// This is a function that basically just calls other functions about one second
+// after the user starts sharing something:
 function ISDProceed(){
 	if(ISDTheyAborted){return;}
 	ISDGetScreenshotInBase64();
@@ -3236,6 +3215,7 @@ function ISDProceed(){
 	ISDReadyForCroping();
 }
 
+// This function just readies things in case they try again after canceling:
 function ISDOnError(){
 	ISDTheyAborted = true;
 	ISDVideoElem.srcObject = null;
@@ -3814,10 +3794,8 @@ function ISDSimpleVariableCleanup(){
   ISDTempCanvasForInterval = 'NA';
   ISDContext = 'NA';
   ISDTheyAborted = false;
+  ISDVideoElem.srcObject = null;
 }
-
-
-
 
 
 // ********Here is the code for the otherPageDialog:********
@@ -4360,6 +4338,16 @@ function checkPNGImage(base64string){
   return true;
 }
 
+
+// This is the function that I generated using the bash script near the bottom
+// of this file. It basically accepts a file name or path and returns the 
+// base64 string that represents the image it would have found in the 
+// images folder when this program was inside of the electron framework.
+// Now that we are moving away from electron, doing this was necessary to
+// allow the program to open in the browser from a local file. Anyhow,
+// if this function can't figure out what string to return, it will simply
+// return a blank white page. Thus, if users complain of blank white pages
+// that might be the problem.
 function getB64ForPath(path){
 	
 	var leafname= path.split('\\').pop().split('/').pop();
@@ -4551,18 +4539,18 @@ function getB64ForPath(path){
 
 	// If none of those cases match, we will just return a blank white page:
 	return IBlank_White_Page_wide;
-	
-	
 }
 
+// This just copies text to the users clipboard:
 function copyTextToUsersClipboard(txt) {
-    navigator.clipboard.writeText(txt).then(() => {
-        // Alert the user that the action took place.
-        // Nobody likes hidden stuff being done under the hood!
-        alert("Copied to clipboard");
-    });
-  }
-  
+	navigator.clipboard.writeText(txt).then(() => {
+		// Alert the user that the action took place.
+		// Nobody likes hidden stuff being done under the hood!
+		alert("Copied to clipboard");
+	});
+}
+
+// This just copies text to the users clipboard from inside a given HTML element:
 function copyTextToUsersClipboardFromPageElement(elId) {
     var copyText = document.getElementById(elId).innerHTML;
     navigator.clipboard.writeText(copyText).then(() => {
@@ -4601,6 +4589,7 @@ echo -e $relatedCode >> outputb64code.txt
  */
 
 
+// This just focuses the main canvas when the modal dialogs close to fix the lost keyboard shortcuts problem:
 function focusMainCanvas(){
 	var el = document.getElementById('canvas1').focus();
 }
@@ -4608,4 +4597,4 @@ function focusMainCanvas(){
 // Since this file is now loaded we can do two things to get rid of the unnecessary error messages:
 OPDReadyOtherPageDialog();
 //console.clear();
-console.log('Previous error messages were almost certainly irrelevent and can be ignored.');
+console.log("Previous 'Failed to load' and 'MCMMoved not defined' error messages are almost certainly irrelevent and can be ignored.");
