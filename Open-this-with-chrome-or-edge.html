@@ -1,16 +1,33 @@
+
+<!--Copyright 2016, 2017, 2018, 2019, 2022 Roger Frybarger
+
+    This file is part of Roger's Math Whiteboard.
+
+    Roger's Math Whiteboard is free software: you can redistribute
+    it and/or modify it under the terms of the GNU General Public
+    License version 2 as published by the Free Software Foundation.
+
+    Roger's Math Whiteboard is distributed in the hope that it will
+    be useful, but WITHOUT ANY WARRANTY; without even the implied
+    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    PURPOSE. See the GNU General Public License version 2 for more
+    details.
+
+    You should have received a copy of the GNU General Public
+    License version 2 along with Roger's Math Whiteboard.  If not,
+    see <http://www.gnu.org/licenses/>.-->
+
+<!--Note that the licence file should be within the 'rmw' folder.-->
+
 <!DOCTYPE html>
 <html>
 <body>
-	<br>
-	<p id="oldWarning" style="display: none;">Note: This version of Roger's Math Whiteboard seems to be over 5 years old. Consider checking <a href="http://www.rogersmathwhiteboard.com" target="_blank">rogersmathwhiteboard.com</a> to see if there is a newer version avaliable.</p>
-	<br>
-	<button id="btn0001" style="font-size:xx-large;">Launch Roger's Math Whiteboard</button>
-	<br>
-	<br>
+	<br><p id="oldWarning" style="display: none;">Note: This version of Roger's Math Whiteboard seems to be over 5 years old. Consider checking <a href="http://www.rogersmathwhiteboard.com" target="_blank">rogersmathwhiteboard.com</a> to see if there is a newer version avaliable.</p>
+	<br><button id="btn0001" style="font-size:xx-large;">Launch Roger's Math Whiteboard</button>
+	<br><br>
 	<h4 id="note" style="display: none;">Note: Unless you are using a Chromebook, Feel free to close this page or browser window. <br> Roger's Math Whiteboard will continue working without it.</h4>
 
 <script>
-	
 	document.getElementById("btn0001").addEventListener("click", openSeperateWindow);
 	checkForOld();
 	var counter = 0;
@@ -18,18 +35,17 @@
 		alert("Warning: You may be using an incompatible browser. There is no guarante that Roger's Math Whiteboard will work properly in this browser. For best results please close this browser and try opening this file again using the Desktop version of Google Chrome.");
 	}
 	
-	
+// Opens Roger's Math Whiteboard in a seperate window and then shows the note:
 function openSeperateWindow(){
 	var a = window.open("rmw/index.html", "_blank", "toolbar=yes,scrollbars=no,resizable=yes,top=50,left=50,width=600,height=400");
 	a.moveTo(0, 0);
 	a.resizeTo(screen.availWidth -10, screen.availHeight -40);
 	counter++;
-	if(counter > 2){
-		document.getElementById("btn0001").disabled = true;
-	}
+	if(counter > 2){document.getElementById("btn0001").disabled = true;}
 	document.getElementById("note").style = "";
 }
 
+// Checks to see if the browser they opened it in is a desktop one that has 'chrome' in the user agent:
 function usingCompatibleBrowser(){
 	var mobileBrowser = true;
 	try{
@@ -55,13 +71,12 @@ function usingCompatibleBrowser(){
 	}
 }
 
+// Checks to see if this version of Roger's Math Whiteboard is over 5 years old:
 function checkForOld(){
 	var el = document.getElementById("oldWarning");
 	const moreThan5YearsFromPublish = 1841586777837;
 	var nowMs = new Date().getTime();
-	if(nowMs > moreThan5YearsFromPublish){
-		el.style = "";
-	}
+	if(nowMs > moreThan5YearsFromPublish){el.style = "";}
 }
 
 

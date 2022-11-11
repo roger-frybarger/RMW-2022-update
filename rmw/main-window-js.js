@@ -1,20 +1,20 @@
 
- /* Copyright 2016, 2017, 2018, 2019 Roger Frybarger
+ /* Copyright 2016, 2017, 2018, 2019, 2022 Roger Frybarger
 
-    This file is part of Roger's Math Whiteboard LITE.
+    This file is part of Roger's Math Whiteboard.
 
-    Roger's Math Whiteboard LITE is free software: you can redistribute
+    Roger's Math Whiteboard is free software: you can redistribute
     it and/or modify it under the terms of the GNU General Public
     License version 2 as published by the Free Software Foundation.
 
-    Roger's Math Whiteboard LITE is distributed in the hope that it will
+    Roger's Math Whiteboard is distributed in the hope that it will
     be useful, but WITHOUT ANY WARRANTY; without even the implied
     warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
     PURPOSE. See the GNU General Public License version 2 for more
     details.
 
     You should have received a copy of the GNU General Public
-    License version 2 along with Roger's Math Whiteboard LITE.  If not,
+    License version 2 along with Roger's Math Whiteboard.  If not,
     see <http://www.gnu.org/licenses/>.*/
 
 // When the window gets resized call the resize function:
@@ -308,7 +308,6 @@ function continueAfterAppFinishedLoading1(){
   checkForScreenSizeIssues();
   document.addEventListener('keydown', validateKeyboardInputForDocument);
   allLoaded = true;
-  //alert('Welcome to Roger\'s Math Whiteboard LITE!\n\nThis online application is intended as a preview of the full version of Roger\'s Math Whiteboard which is available for free from rogersmathwhiteboard.com. You are free to use it as a basic online whiteboard and experiment with the available features but please be aware that the following functionality does not currently work in this preview:\n\n\n1. Opening sets of images.\n2. Saving the whiteboard pages as a set of images.\n3. Inserting screenshots of external content as pages.\n4. Inserting external images as pages.\n\n Also, this online preview has only been tested in Google Chrome. It may work in other browsers, but it is not intended to be used in them. If you choose to use this app in a browser other than Google Chrome you are doing so at your own risk. \n\n We hope you enjoy this preview. If you do, please consider downloading the full version from our website: rogersmathwhiteboard.com\n\nAlso, the principal author of this program is now offering online math & CIS tutoring!! Check out his website at tutoringbyroger.com');
 }
 
 
@@ -2637,7 +2636,7 @@ function SIDBase64toBlob(base64Data, contentType) {
 // This function readies the about dialog.
 function ADReadyAboutDialog(){ // eslint-disable-line no-unused-vars
   // eslint-disable-next-line max-len
-  document.getElementById('ADVersionLine').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roger’s Math Whiteboard version 3.14159265358979 can be best understood as a multi-page image editor designed around the specific needs of math and science teachers who want to take advantage of pen/touch/stylus input while presenting. It is designed to be used while presenting content in class, and/or while working through questions from students.';
+  document.getElementById('ADVersionLine').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roger’s Math Whiteboard version 3.14159 can be best understood as a multi-page image editor designed around the specific needs of math and science teachers who want to take advantage of pen/touch/stylus input while presenting. It is designed to be used while presenting content in class, and/or while working through questions from students.';
 }
 
 // ********Here is the code for the fileOtherDialog:********
