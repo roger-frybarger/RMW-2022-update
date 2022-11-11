@@ -2,6 +2,7 @@
 <html>
 <body>
 	<br>
+	<p id="oldWarning" style="display: none;">Note: This version of Roger's Math Whiteboard seems to be over 5 years old. Consider checking <a href="http://www.rogersmathwhiteboard.com" target="_blank">rogersmathwhiteboard.com</a> to see if there is a newer version avaliable.</p>
 	<br>
 	<button id="btn0001" style="font-size:xx-large;">Launch Roger's Math Whiteboard</button>
 	<br>
@@ -11,6 +12,7 @@
 <script>
 	
 	document.getElementById("btn0001").addEventListener("click", openSeperateWindow);
+	checkForOld();
 	var counter = 0;
 	if(!usingCompatibleBrowser()){
 		alert("Warning: You may be using an incompatible browser. There is no guarante that Roger's Math Whiteboard will work properly in this browser. For best results please close this browser and try opening this file again using the Desktop version of Google Chrome.");
@@ -50,6 +52,15 @@ function usingCompatibleBrowser(){
 	else{
 		// We are running in a mobile browser or something that definitely isn't the desktop version of Google Chrome so:
 		return false;
+	}
+}
+
+function checkForOld(){
+	var el = document.getElementById("oldWarning");
+	const moreThan5YearsFromPublish = 1841586777837;
+	var nowMs = new Date().getTime();
+	if(nowMs > moreThan5YearsFromPublish){
+		el.style = "";
 	}
 }
 
