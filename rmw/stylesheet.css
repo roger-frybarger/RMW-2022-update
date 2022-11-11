@@ -169,19 +169,7 @@ body {
   background-position: -48px 0;
 }
 
-#topRightMinimizeBtn {
-  background: url('images/icons/minimize.png');
-}
-#topRightMinimizeBtn:hover {
-  background-position: -48px 0;
-}
 
-#topRightCloseBtn {
-  background: url('images/icons/close.png');
-}
-#topRightCloseBtn:hover {
-  background-position: -48px 0;
-}
 
 
 /*
