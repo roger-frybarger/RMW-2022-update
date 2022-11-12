@@ -20,6 +20,7 @@
 // When the window gets resized call the resize function:
 window.addEventListener('resize', onWindowResize);
 
+// This stuff enables the popup if there are unsaved changes:
 function onBeforeUnload(e) {
     if (thereAreUnsavedChanges()) {
         e.preventDefault();
@@ -114,7 +115,10 @@ var topToolbarWidth = 40;
 var SideToolbarWidth = 150;
 
 // Here are all of the images that the program needs. I had to do it this way
-// to avoid cross-origin errors when opened locally :-(
+// to avoid cross-origin errors when opened locally. They use to be in the 
+// images folder or in the extra templates folder when this app was run
+// inside electron. However, now that we are moving away from electron
+// this is kinda the only way to make things work properly. :-(
 
 // The main ones:
 const IBlank_Graph_Paper_Page_b = "data:image/png;base64,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";
@@ -303,6 +307,7 @@ adjustSizeOfMenuButtonsToScreenSize();
 initializeGlobalVariables();
 initializeCanvas();
 
+// More stuff that is related to the start of the program:
 function continueAfterAppFinishedLoading1(){
   setUpGUIOnStartup();
   checkForScreenSizeIssues();
@@ -476,7 +481,7 @@ function setUpGUIOnStartup(){
   document.getElementById('sizeBtn').innerHTML = 'Size: M';
 }
 
-// This function runs about 1/2 second after main.js finishes doing its thing and just checks to see if the user's screen size
+// This function runs about 1/2 second after the program starts and just checks to see if the user's screen size
 // is within the reasonable limits for this program.
 function checkForScreenSizeIssues(){
   var screenX = screen.width;
@@ -1866,6 +1871,12 @@ function insertTemplateAsPage(locationOfTemplate){
   tempImageForInserting.addEventListener('load', function (){
     insertPageUsingImage(tempImageForInserting);
   });
+  // Here again when this program was running within electron, we could simply set the src to the relevant
+  // path. Now however, I have made a special function that handles returning the base64 string that would
+  // have corresponded with the image at a particular path. Thus, this function can still accept a path or
+  // file name, and everything will still work as expected as long as the path or file name is one of the
+  // templates that was in the version that was running in electron. If not, they will get a blank white
+  // page. See the getB64ForPath function for more details.
   tempImageForInserting.src = getB64ForPath(locationOfTemplate);
 }
 
@@ -2171,7 +2182,7 @@ function SDOkBtnFunction(){
   }
 }
 
-// Here is a function that just sets the length of the undo array:
+// Here is the function that sets the length of the undo array:
 function SDActuallySetUndoLength(){
   var distanceFromEnd = (imageArrayForUndo.length - 1) - currentPlaceInUndoArray;
   var tempArray = [];
@@ -2521,8 +2532,9 @@ async function SIDChooseFolderBtnFunction(){
 }
 
 
-
-
+// This function run when the user clicks the "Save Images To Chosen Folder" button.
+// It checks that it is save to save the images and then attempts to save them into
+// the folder the user chose:
 async function SIDActuallySavePagesBtnFunction(){
 	if(!SIDValidInput){
 		alert('Error: Please choose a valid name to put on all of the files or leave the field empty.');
@@ -2549,8 +2561,6 @@ async function SIDActuallySavePagesBtnFunction(){
 		
 		var name = "" + SIDNameForFiles + (i + 1) + '.png';
 		var fileHandle = await pathOfFolderToSaveInto.getFileHandle(name, { create: true }).catch((error) => {SIDErrorMessage();});
-		// For testing:
-		//await new Promise(r => setTimeout(r, 3000));
 		
 		var b64str = arrayOfCurrentImages[i].src;
 		b64str = b64str.substring(22, b64str.length); // stripping off the junk at the beginning
@@ -2561,6 +2571,7 @@ async function SIDActuallySavePagesBtnFunction(){
 	}
 }
 
+// If something breakes while trying to save the files, this function informs the user of the problem:
 function SIDErrorMessage(){
 	SIDErrorsSavingFiles = true;
 	alert("***Error:***\nOne or more errors occured while trying to save files into the folder you selected. Please try again. Make sure that you have permission to save files to the folder that you select.");
@@ -2571,11 +2582,12 @@ function SIDErrorMessage(){
 	  document.getElementById('SIDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
 }
 
+// This function runs if the user selects a non-empty folder. It simply tells them that they must select an empty folder:
 function SIDWarnAboutEmptyFolder(){
 	alert("***Error:***\nThe folder you chose seems to have other files and/or folders in it. This program can only save images into an empty folder. Please either:\n\n1. Manually delete everything in that folder and select it again via this window or:\n2. Create/select a different empty folder to use for the images.");
 }
 
-
+// This function handles actually writing the image out to the file:
 async function SIDWriteFile(fileHandle, contents) {
   if(SIDErrorsSavingFiles){return;}
   // Create a FileSystemWritableFileStream to write to.
@@ -2603,10 +2615,8 @@ async function SIDWriteFile(fileHandle, contents) {
   }
 }
 
-
-
-
-
+// This function converts the base64 string into a blob that can be written to the file system to
+// actually create a png image.
 // found at https://stackoverflow.com/a/43209768
 function SIDBase64toBlob(base64Data, contentType) {
     contentType = contentType || '';
@@ -2735,8 +2745,10 @@ function FODContinueRotateDrawingSurfaceClockwise(){
   }
 }
 
-// This function just puts the base 64 strings in the textarea so they can be copied if desired:
-function FODRotateDisplayBase64Strings(){
+// This function just puts the base 64 strings in the textarea so they can be copied if desired
+// It also adds the python script so that the strings can be converted into images if the user
+// has some technical skills and has Python 3 installed:
+function FODDisplayBase64Strings(){
 	saveCurrentImageToArrayBeforeMoving();
 	var str = "";
 	for(var i in arrayOfCurrentImages){
@@ -2855,7 +2867,7 @@ function ITDCheckForEnter(e){ // eslint-disable-line no-unused-vars
 
 // ********Here is the code for the otherToolDialog:********
 
-// This function just closes the dialog:
+// This function just closes the dialog. It is often called from within the html onclick attribute of the applicable button:
 function OTDCloseDialog(){ // eslint-disable-line no-unused-vars
   document.getElementById('OTDCloseBtn').click();  // Clicking the close button on dialog after we are done with it.
 }
@@ -3059,6 +3071,7 @@ function OCDOkBtnFunction(){
 }
 
 // If the user presses enter inside of one of the text boxes, we will run the ok button function:
+// This function is called within the onkeydown attribute of the applicable button in the html
 function OCDCheckForEnter(e){ // eslint-disable-line no-unused-vars
   var key = e.which || e.keyCode;
   if (key === 13){ // 13 is enter
@@ -3206,7 +3219,6 @@ async function ISDStartScreenshotProcess(){
 	ISDVideoElem.autoplay = true;
 	ISDVideoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(ISDDisplayMediaOptions).catch(ISDOnError);
 	setTimeout(() => ISDProceed(), 1000);
-	
 }
 
 // This function stops the capture once we have gotten what we need from it.
@@ -3458,7 +3470,7 @@ function ISDAddCroppingMethodDropdown(){
   ISDCroppingMethodDropdown.style.fontSize = '30px';
   ISDCroppingMethodDropdown.style.margin = '0px 0px 25px 0px';
   
-  // Add the entries to the background color dropdown:
+  // Add the entries to the croping method dropdown:
   var options = ['paste within displayed size', 'cut to selection']; // ----Visible!
   var optionValues = ['windowsize', 'selection'];
   
@@ -4565,6 +4577,11 @@ function getB64ForPath(path){
 	return IBlank_White_Page_wide;
 }
 
+// This just focuses the main canvas when the modal dialogs close to fix the lost keyboard shortcuts problem:
+function focusMainCanvas(){
+	var el = document.getElementById('canvas1').focus();
+}
+
 // This just copies text to the users clipboard:
 function copyTextToUsersClipboard(txt) {
 	navigator.clipboard.writeText(txt).then(() => {
@@ -4613,10 +4630,6 @@ echo -e $relatedCode >> outputb64code.txt
  */
 
 
-// This just focuses the main canvas when the modal dialogs close to fix the lost keyboard shortcuts problem:
-function focusMainCanvas(){
-	var el = document.getElementById('canvas1').focus();
-}
 
 // Since this file is now loaded we can do two things to get rid of the unnecessary error messages:
 OPDReadyOtherPageDialog();
