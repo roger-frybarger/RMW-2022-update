@@ -4260,6 +4260,31 @@ function fillEllipseBtnFunction(){ // eslint-disable-line no-unused-vars
   }
 }
 
+// This function copies a selection to a new blank white page:
+async function copyNpBtnFunction(){
+	if(areaSelected !== true){
+		// If they haven't selected anything yet, inform them that they need to:
+		tellUserToSelectAnAreaFirst();
+		return;
+	}
+	// Otherwise, copy their selection to the clipboard:
+	copyBtnFunction();
+	// Insert a new blank white page:
+	mainUIInsertTemplateAsPage('images/Blank_White_Page.png');
+	// Wait for that to complete:
+	await new Promise(r => setTimeout(r, 300));
+	// Paint the copied section on the new page in the top left corner:
+	canUseTool = true;
+	pasteToolFunction(0, copiedSectionOfCanvas.height, 'down');
+	pasteToolFunction(0, copiedSectionOfCanvas.height, 'up');
+	pushStateIntoUndoArray();
+	canUseTool = false;
+	// Wait another 300 miliseconds:
+	await new Promise(r => setTimeout(r, 300));
+	// And finally, make the drawing permanent:
+	FODMakeCurrentDrawingPermanent();
+}
+
 
 // Here is the function that pushes the current state of the whiteboard into the undo array:
 function pushStateIntoUndoArray(){

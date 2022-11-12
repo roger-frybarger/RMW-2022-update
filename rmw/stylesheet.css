@@ -169,6 +169,13 @@ body {
   background-position: -48px 0;
 }
 
+#copyNpBtn {
+  background: url('images/icons/copy_np.png');
+}
+#copyNpBtn:hover {
+  background-position: -48px 0;
+}
+
 
 
 
