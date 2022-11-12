@@ -3341,6 +3341,7 @@ function ISDFixCanvas(){
 // the captured screenshot to insert. This is an important exception from the formality of making these linkages
 // inside of the HTML.
 function ISDAddTouchAndClickEventHandelers(){
+  ISDCanvas.setAttribute("oncontextmenu", "return false;");
   ISDCanvas.addEventListener('mousedown', function (e){
     var offset = getCoords(ISDCanvas);
     ISDInstrumentDown(e.pageX - offset.left, e.pageY - offset.top);
