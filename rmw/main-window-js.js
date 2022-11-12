@@ -2735,6 +2735,31 @@ function FODContinueRotateDrawingSurfaceClockwise(){
   }
 }
 
+// This function just puts the base 64 strings in the textarea so they can be copied if desired:
+function FODRotateDisplayBase64Strings(){
+	saveCurrentImageToArrayBeforeMoving();
+	var str = "";
+	for(var i in arrayOfCurrentImages){
+		str += "" + arrayOfCurrentImages[i].src + "\n";
+	}
+	
+	str += "\n\n\n" + "# And here is a python script that can decode these strings for you:\n\n";
+	str += "\n# found at https://superuser.com/a/1498884";
+	str += "\n# To use, put below code in a file named 'decode.py' and the above lines of text in a file named 'input.txt' Then";
+	str += "\n# put both files in the same folder, open a terminal/command prompt in that folder and then";
+	str += "\n# run 'python3 decode.py input.txt' You will, of course, need Python3 installed to use this script.";
+	str += "\n";
+	str += "\nimport fileinput";
+	str += "\nimport base64";
+	str += "\nfor index, line in enumerate(fileinput.input(), 1):";
+	str += "\n  if line.startswith('data:image/png;base64,'):";
+	str += "\n    with open('page{0:04}.png'.format(index), 'wb') as png:";
+	str += "\n       line = line.strip()";
+	str += "\n       png.write(base64.b64decode(line[22:] + '===='))";
+	
+	document.getElementById('FODBase64TextArea').value = str;
+}
+
 
 
 // ********Here is the code for the insertTextDialog:********

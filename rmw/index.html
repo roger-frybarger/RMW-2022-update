@@ -844,7 +844,10 @@ Public License instead of this License.
           <a draggable="false" class="modalBoxKeypadBtns" onclick="FODMakeCurrentDrawingPermanent();" ontouchstart="(function(e){e.preventDefault();})(event); FODMakeCurrentDrawingPermanent();">Make current drawing permanent</a><br>
           <a draggable="false" class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('clockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('clockwise');">Rotate page clockwise</a><br>
           <a draggable="false" class="modalBoxKeypadBtns" onclick="FODRotateDrawingSurface('counterclockwise');" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDrawingSurface('counterclockwise');">Rotate page counterclockwise</a><br>
-          <p> </p>
+          <p>If the still-experemental save images dialog just doesn't want to work for you you can try using the button below and copying the resulting text out of the textbox and then saving it into a text file, and then using the included python script to retrieve the lost images:</p>
+          <a draggable="false" class="modalBoxKeypadBtns" onclick="FODRotateDisplayBase64Strings();" ontouchstart="(function(e){e.preventDefault();})(event); FODRotateDisplayBase64Strings();">Display Base64 Strings Below</a><br>
+          <textarea id="FODBase64TextArea" style="resize:none;white-space: pre;overflow-wrap: normal;overflow-x: scroll;" rows="10" cols="50" readonly></textarea><br>
+          <br><br><br>
           
         </div>
       </div>
