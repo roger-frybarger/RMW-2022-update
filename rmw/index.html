@@ -984,7 +984,7 @@ Public License instead of this License.
         <h2>Pick a Color:</h2>
         <div class="modalBoxContent">
           
-          <canvas id="OCDPickerCanvas" onmousedown="OCDMouseDown(event)" ontouchstart="OCDTouchStart(event);" width="350" height="750"></canvas>
+          <canvas id="OCDPickerCanvas" oncontextmenu="return false;" onmousedown="OCDMouseDown(event)" ontouchstart="OCDTouchStart(event);" width="350" height="750"></canvas>
           <div>
             <div id="OCDColorValuesInputDiv">
               Red:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input draggable="false" type="number" class="OCDInputBoxes" oninput="OCDValidateInputAndUpdateIfApplicable();" onkeydown="OCDCheckForEnter(event);" id="OCDRedTextBox" min="0" max="255"><br>
