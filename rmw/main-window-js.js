@@ -2882,23 +2882,31 @@ var OCDValid = true;
 
 // This function readies the color picker dialog:
 function OCDReadyOtherColorDialog(){ // eslint-disable-line no-unused-vars
+  // An image to use so they can select shades of grey if they want:
+  const greyImg = "data:image/png;base64,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";
   // Set up the canvas on which the two color wheels will be painted:
   var canvas = document.getElementById('OCDPickerCanvas');
   var context = canvas.getContext('2d');
   var x = canvas.width / 2;
-  var y = canvas.height / 4;
+  var y = (canvas.height-50) / 4;
   var radius = canvas.width / 2;
   
   context.fillStyle = 'white';
-  context.fillRect(0, 0, canvas.width, (canvas.height / 2));
+  context.fillRect(0, 0, canvas.width, ((canvas.height-50) / 2));
 
   context.fillStyle = 'black';
-  context.fillRect(0, (canvas.height / 2), canvas.width, (canvas.height / 2));
+  context.fillRect(0, ((canvas.height-50) / 2), canvas.width, ((canvas.height-50) / 2));
   
   // Draw the two color wheels:
   OCDDrawColorCircle(x, y, radius, context, false);
   OCDDrawColorCircle(x, 3 * y, radius, context, true);
-  
+  // Draw the grey gradient image onto the canvas so they can select a shade of grey:
+  var image999 = new Image();
+  image999.onload = function(){
+	  context.drawImage(image999, 0, 700);
+  };
+  image999.src = greyImg;
+  // Get the color values:
   var value = instrumentColor.split(',');
   OCDRed = parseInt(value[0].substring(5), 10);
   OCDGreen = parseInt(value[1].substring(1), 10);
