@@ -1834,6 +1834,7 @@ function resizeAndLoadImagesOntoCanvases(img, orgImg, incommingWidth, incommingH
     eraserContext.canvas.height = canvasHeight;
     eraserContext.drawImage(orgImg, 0, 0, canvasWidth, canvasHeight);
   }
+  focusMainCanvas();
 }
 
 
@@ -4121,6 +4122,7 @@ function copyBtnFunction(){
     tempX = 'NA';
     tempY = 'NA';
     areaSelected = false;
+    focusMainCanvas();
   }
   else{
     tellUserToSelectAnAreaFirst();
@@ -4132,6 +4134,7 @@ function pasteBtnFunction(){
   if(copiedSectionOfCanvas !== 'NA'){
     tool = 'PASTE';
     updateTextOfToolBtn();
+    focusMainCanvas();
   }
   else{
     tellUserToCopySomethingFirst();
@@ -4161,6 +4164,7 @@ function drawRectangleBtnFunction(){ // eslint-disable-line no-unused-vars
     areaSelected = false;
     pushStateIntoUndoArray();
     tempCanvasForInterval = 'NA';
+    focusMainCanvas();
   }
   else{
     tellUserToSelectAnAreaFirst();
@@ -4185,6 +4189,7 @@ function fillRectangleBtnFunction(){ // eslint-disable-line no-unused-vars
     areaSelected = false;
     pushStateIntoUndoArray();
     tempCanvasForInterval = 'NA';
+    focusMainCanvas();
   }
   else{
     tellUserToSelectAnAreaFirst();
@@ -4236,6 +4241,7 @@ function drawEllipseBtnFunction(){ // eslint-disable-line no-unused-vars, max-st
     areaSelected = false;
     pushStateIntoUndoArray();
     tempCanvasForInterval = 'NA';
+    focusMainCanvas();
   }
   else{
     tellUserToSelectAnAreaFirst();
@@ -4262,6 +4268,7 @@ function fillEllipseBtnFunction(){ // eslint-disable-line no-unused-vars
     areaSelected = false;
     pushStateIntoUndoArray();
     tempCanvasForInterval = 'NA';
+    focusMainCanvas();
   }
   else{
     tellUserToSelectAnAreaFirst();
@@ -4291,6 +4298,7 @@ async function copyNpBtnFunction(){
 	await new Promise(r => setTimeout(r, 300));
 	// And finally, make the drawing permanent:
 	FODMakeCurrentDrawingPermanent();
+	focusMainCanvas();
 }
 
 
@@ -4337,10 +4345,12 @@ function clearUndoHistory(){
 function tellUserToSelectAnAreaFirst(){
   // open up a window telling the user to select an area.
   alert('Please use the Select tool to select a region first.', '');
+  focusMainCanvas();
 }
 
 function tellUserToCopySomethingFirst(){
   alert('Error: You have not yet copied a region of the whiteboard, thus nothing to paste yet.', ' ');
+  focusMainCanvas();
 }
 
 

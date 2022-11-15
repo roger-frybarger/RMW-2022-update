@@ -70,8 +70,8 @@
         <!--These are the entries in the top nav bar. They each have to have the transparent image as the
         source because if that is removed, a border will be shown no matter how they are styled in the css-->
         <li><a draggable="false" href="#settingsDialog" onclick="SDReadySettingsDialog();"><img draggable="false" id="settingsBtn" src="images/icons/transparent.png" alt="settings button"></a></li>
-        <li><a draggable="false" href="#" onmousedown="undoBtnFunction();"><img draggable="false" class="topLeftButtons" id="undoBtn" src="images/icons/transparent.png" alt="undo button"></a></li>
-        <li><a draggable="false" href="#" onmousedown="redoBtnFunction();"><img draggable="false" class="topLeftButtons" id="redoBtn" src="images/icons/transparent.png" alt="redo button"></a></li>
+        <li><a draggable="false" href="#" onmousedown="undoBtnFunction();" onkeydown="recieveKeyboardInputFromCanvas(event);"><img draggable="false" class="topLeftButtons" id="undoBtn" src="images/icons/transparent.png" alt="undo button"></a></li>
+        <li><a draggable="false" href="#" onmousedown="redoBtnFunction();" onkeydown="recieveKeyboardInputFromCanvas(event);"><img draggable="false" class="topLeftButtons" id="redoBtn" src="images/icons/transparent.png" alt="redo button"></a></li>
         <li><a draggable="false" href="#" onclick="copyBtnFunction();"><img draggable="false" class="topLeftButtons" id="copyBtn" src="images/icons/transparent.png" alt="copy button"></a></li>
         <li><a draggable="false" href="#" onclick="pasteBtnFunction();"><img draggable="false" class="topLeftButtons" id="pasteBtn" src="images/icons/transparent.png" alt="paste button"></a></li>
         <li><a draggable="false" href="#" onclick="drawRectangleBtnFunction();"><img draggable="false" class="topLeftButtons" id="drawRectangleBtn" src="images/icons/transparent.png" alt="draw rectangle button"></a></li>
