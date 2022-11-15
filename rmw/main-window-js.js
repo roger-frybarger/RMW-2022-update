@@ -433,6 +433,7 @@ function initializeCanvas(){
 
 // Main canvas mouse down function:
 function MCMDown(e){ // eslint-disable-line no-unused-vars
+	if(e.button != 0){return;}
   instrumentDown(e.pageX - SideToolbarWidth, e.pageY - topToolbarWidth);
 }
 
@@ -461,6 +462,7 @@ function MCTMoved(e){ // eslint-disable-line no-unused-vars
 
 // Main canvas mouse ended function:
 function MCMEnded(e){ // eslint-disable-line no-unused-vars
+	if(e.button != 0){return;}
   instrumentUp(e.pageX - SideToolbarWidth, e.pageY - topToolbarWidth);
 }
 
@@ -3352,6 +3354,7 @@ function ISDFixCanvas(){
 function ISDAddTouchAndClickEventHandelers(){
   ISDCanvas.setAttribute("oncontextmenu", "return false;");
   ISDCanvas.addEventListener('mousedown', function (e){
+	  if(e.button != 0){return;}
     var offset = getCoords(ISDCanvas);
     ISDInstrumentDown(e.pageX - offset.left, e.pageY - offset.top);
   });
@@ -3376,6 +3379,7 @@ function ISDAddTouchAndClickEventHandelers(){
     e.preventDefault();
   });
   ISDCanvas.addEventListener('mouseup', function (e){
+	  if(e.button != 0){return;}
     var offset = getCoords(ISDCanvas);
     ISDInstrumentUp(e.pageX - offset.left, e.pageY - offset.top);
   });
