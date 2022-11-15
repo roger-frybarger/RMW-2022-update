@@ -401,6 +401,12 @@ function adjustSizeOfMenuButtonsToScreenSize(){
   default:
     break;
   }
+  // Also let them know if they have made the window too small:
+  var w = window.innerWidth;
+  var h = window.innerHeight;
+  if(w < 600 || h < 540){
+	  alert("This program may not display correctly in a window this small.");
+  }
 }
 
 function initializeGlobalVariables(){ // These have to be done after the app has had a chance to load. Otherwise they will fail.
@@ -488,9 +494,9 @@ function setUpGUIOnStartup(){
 function checkForScreenSizeIssues(){
   var screenX = screen.width;
   var screenY = screen.height;
-  if(screenX < 800 || screenY < 600){
+  if(screenX < 850 || screenY < 680){
     // eslint-disable-next-line max-len
-    alert('Your screen resolution is too low to allow this program to display properly. A minimum screen resolution of 800 by 600 is required.', 'Error');
+    alert('Your screen resolution is too low to allow this program to display properly. A minimum screen resolution of 850 by 680 is required.', 'Error');
   }
   if(screenX > 1920 || screenY > 1080){
     // eslint-disable-next-line max-len
