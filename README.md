@@ -41,7 +41,3 @@ Furthermore, please note that all of the insertable templates within this progra
 If you are just looking to download & use this program for everyday use please see the Download page of our website at www.rogersmathwhiteboard.com
 
 
-
-## Important Note:
-
-This repository is still very much a work in progress at the moment. Don't download it if you intend to use the program. Wait until I finish it and remove this text.
