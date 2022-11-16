@@ -32,8 +32,8 @@
 	document.getElementById("btn0001").addEventListener("click", openSeperateWindow);
 	checkForOld();
 	var counter = 0;
-	if(!usingCompatibleBrowser()){
-		alert("Warning: You may be using an incompatible browser. There is no guarante that Roger's Math Whiteboard will work properly in this browser. For best results please close this browser and try opening this file again using the Desktop version of Google Chrome.");
+	if(!usingCompatibleBrowser() || chromeVersionTooOld()){
+		alert("Warning: You may be using an incompatible browser. There is no guarante that Roger's Math Whiteboard will work properly in this browser. For best results please close this browser and try opening this file again using the latest Desktop version of Google Chrome or Microsoft Edge.");
 	}
 	
 // Opens Roger's Math Whiteboard in a seperate window and then shows the note:
@@ -78,6 +78,16 @@ function checkForOld(){
 	const moreThan5YearsFromPublish = 1841586777837;
 	var nowMs = new Date().getTime();
 	if(nowMs > moreThan5YearsFromPublish){el.style = "";}
+}
+
+// Checks to see if they are using an old version of chrome or edge:
+function chromeVersionTooOld(){
+	var cv = 1;
+	try{
+		cv = parseInt(navigator.appVersion.match(/.*Chrome\/([0-9\.]+)/)[1]);
+	}catch(err){ cv = 1; }
+	if(cv < 90){ return true; }
+	else{ return false; }
 }
 
 // That's all folks! There really isn't much to this page, and that is intentional.

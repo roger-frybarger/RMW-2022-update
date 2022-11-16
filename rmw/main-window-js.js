@@ -4689,3 +4689,4 @@ echo -e $relatedCode >> outputb64code.txt
 OPDReadyOtherPageDialog();
 //console.clear();
 console.log("Previous 'Failed to load' and 'MCMMoved not defined' error messages are almost certainly irrelevent and can be ignored.");
+//alert(parseInt(navigator.appVersion.match(/.*Chrome\/([0-9\.]+)/)[1]));
